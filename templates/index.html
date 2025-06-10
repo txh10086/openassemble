@@ -1,0 +1,74 @@
+<!--FastAPIProject/templates/index.html-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制阀装配任务分解系统</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 控制阀装配任务分解系统</h1>
+        <p class="subtitle">智能化工序分解 · 并行处理 · 实时可视化</p>
+
+        <div class="form-container">
+            <form id="taskForm">
+                <input type="text" id="task" name="task" value="装配DN50球阀" placeholder="请输入装配任务..." required>
+                <button type="submit" class="submit-btn">
+                    <span id="btnText">开始分解</span>
+                    <span id="btnSpinner" style="display: none;">处理中...</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="status-container">
+            <div id="status">准备就绪</div>
+            <div class="progress-container" style="width: 200px;">
+                <progress id="progressBar" value="0" max="100"></progress>
+            </div>
+        </div>
+
+        <div id="performance-info" style="display: none;">
+            <span>⚡ 并行处理模式已启用 - 工步分解速度提升 3-5 倍</span>
+            <span id="parallel-count" style="margin-left: 10px;"></span>
+        </div>
+
+        <div class="process-visualization">
+            <div class="process-header">
+                <h3>工序分解结果 <span id="update-status" class="updating-indicator" style="display: none;">
+                    <span class="updating-dot"></span>实时更新中
+                </span></h3>
+            </div>
+
+            <div id="process-cards" class="process-cards-container">
+                <!-- 动态生成的卡片将显示在这里 -->
+                <div class="loading-card" style="grid-column: 1 / -1;">
+                    <p style="color: #666;">请输入任务并点击"开始分解"按钮</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>Excel 格式视图：</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span id="excel-title">工艺工序分解结果</span>
+            <div style="display: flex; gap: 10px;">
+                <button id="exportJson" style="display: none;" onclick="exportToJSON()" class="export-btn json-btn">导出JSON</button>
+                <button id="exportExcel" style="display: none;" onclick="exportToExcel()" class="export-btn excel-btn">导出Excel</button>
+            </div>
+        </div>
+        <div id="excel-window">
+            <p style="color: #666; text-align: center; padding: 20px;">请输入任务并点击"开始分解"按钮</p>
+        </div>
+    </div>
+
+    <!-- SVG图标 -->
+    <svg style="display: none;">
+        <symbol id="expand-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+        </symbol>
+    </svg>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

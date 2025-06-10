@@ -1,0 +1,44 @@
+{
+  "ec201c83e7b8058a": {
+    "doc_id": "ec201c83e7b8058a",
+    "title": "EMOS",
+    "source_type": "file",
+    "source_path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\tmpg8zy51j9.pdf",
+    "domain": "1",
+    "version": "1.0",
+    "created_at": "2025-06-09T16:06:16.830743",
+    "updated_at": "2025-06-09T16:06:16.830743",
+    "hash": "b96e7b933650a3ad508c6b511acd1f67",
+    "page_count": 18,
+    "word_count": 11386,
+    "token_count": 16811
+  },
+  "5a60e9228e40f29b": {
+    "doc_id": "5a60e9228e40f29b",
+    "title": "李飞飞论文",
+    "source_type": "file",
+    "source_path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\tmpzk6agip0.pdf",
+    "domain": "具身智能",
+    "version": "1.0",
+    "created_at": "2025-06-09T16:37:18.814490",
+    "updated_at": "2025-06-09T16:37:18.814490",
+    "hash": "b655a477efcf43b22d590720dcbc825b",
+    "page_count": 23,
+    "word_count": 12206,
+    "token_count": 20910
+  },
+  "546bc1d865046b9d": {
+    "doc_id": "546bc1d865046b9d",
+    "title": "2",
+    "source_type": "file",
+    "source_path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\tmpu4m541kr.pdf",
+    "domain": "2",
+    "version": "1.0",
+    "created_at": "2025-06-09T18:07:27.242450",
+    "updated_at": "2025-06-09T18:07:27.242450",
+    "hash": "9493d5cd6f4d698f8e9be343b69dcef0",
+    "page_count": 1,
+    "word_count": 566,
+    "token_count": 1707
+  }
+}

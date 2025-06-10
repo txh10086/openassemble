@@ -1,0 +1,546 @@
+/* FastAPIProject/static/styles2.css */
+
+/* 基础样式 */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* 标题样式 */
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+/* 表单样式 */
+.form-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+#taskForm {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.submit-btn {
+    padding: 15px 35px;
+    font-size: 16px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* 状态栏样式 */
+.status-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+#status {
+    flex: 1;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+/* 进度条容器 */
+.progress-container {
+    background: #e9ecef;
+    border-radius: 15px;
+    padding: 5px;
+    overflow: hidden;
+    position: relative;
+    height: 30px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#progressBar {
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    border: none;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+#progressBar::-webkit-progress-bar {
+    background: transparent;
+}
+
+#progressBar::-webkit-progress-value {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+#progressBar::-moz-progress-bar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* 性能信息 */
+#performance-info {
+    background: #e3f2fd;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 4px solid #2196f3;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 主要内容区域 - 流程图样式 */
+.process-visualization {
+    margin: 30px 0;
+}
+
+.process-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.process-header h3 {
+    color: #2c3e50;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+/* 流程卡片容器 */
+.process-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* 工序卡片 */
+.process-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: cardAppear 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.process-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes cardAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 卡片头部 */
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.process-number {
+    font-size: 2.5em;
+    font-weight: 700;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.process-name {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+/* 卡片内容 */
+.card-body {
+    padding: 20px;
+}
+
+.process-description {
+    color: #5a6c7d;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* 工步容器 */
+.steps-container {
+    margin-top: 15px;
+}
+
+.steps-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.steps-title {
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.step-count {
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+}
+
+.expand-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.expand-icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* 工步列表 */
+/* 默认收起：无高度，隐藏溢出 */
+.steps-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+/* 展开状态：高度根据内容自动伸缩 */
+.steps-list.expanded {
+    max-height: 500px;
+}
+
+/* 可选：为列表滚动添加样式 */
+.steps-list.expanded.scrollable {
+  overflow-y: auto;
+}
+
+.step-item {
+    background: #f8f9fa;
+    border-left: 3px solid #667eea;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 0 10px 10px 0;
+    animation: stepAppear 0.3s ease forwards;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+@keyframes stepAppear {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.step-number {
+    background: #667eea;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.step-unit {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.step-content {
+    margin-left: 40px;
+}
+
+.step-device {
+    color: #3498db;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.step-action {
+    color: #2c3e50;
+    line-height: 1.5;
+}
+
+/* 加载动画 */
+.loading-card {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 更新指示器 */
+.updating-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #667eea;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.updating-dot {
+    width: 8px;
+    height: 8px;
+    background: #667eea;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+/* Excel视图保持原样 */
+#excel-window {
+    margin-top: 20px;
+    overflow-x: auto;
+    border: 1px solid #d0d7de;
+    background-color: #f6f8fa;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.excel-table {
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-size: 13px;
+}
+
+.excel-table th {
+    background-color: #217346;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    border: 1px solid #196436;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.excel-table td {
+    border: 1px solid #d0d7de;
+    padding: 6px 10px;
+    text-align: left;
+    vertical-align: middle;
+    background-color: white;
+}
+
+.excel-table td.merged {
+    text-align: center;
+    background-color: #f0f6fc;
+    font-weight: 500;
+}
+
+.excel-table tr:hover td {
+    background-color: #f6f8fa !important;
+}
+
+.excel-table .process-info {
+    background-color: #e7f3ff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .process-cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    #taskForm {
+        flex-direction: column;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+/* 导出按钮样式 */
+.export-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.export-btn:active {
+    transform: translateY(0);
+}
+
+.excel-btn {
+    background: #217346;
+    color: white;
+}
+
+.excel-btn:hover {
+    background: #1a5c37;
+}
+
+.json-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.json-btn:hover {
+    background: linear-gradient(135deg, #5569d8 0%, #653a90 100%);
+}

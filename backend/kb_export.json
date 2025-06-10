@@ -1,0 +1,10 @@
+{
+  "metadata": {},
+  "api_config": {
+    "base_url": "https://cloud.infini-ai.com/maas/v1",
+    "model_name": "deepseek-v3"
+  },
+  "domains": [],
+  "total_docs": 0,
+  "export_time": "D:\\FastAPIProject\\backend"
+}
