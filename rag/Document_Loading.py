@@ -8,7 +8,7 @@ import nltk
 from typing import List, Dict, Any
 
 # Download nltk data if not already present
-nltk.download('punkt_tab')
+nltk.download('punkt')
 
 
 def load_document(url: str) -> str:

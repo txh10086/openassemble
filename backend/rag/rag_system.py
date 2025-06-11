@@ -20,14 +20,20 @@ from openai import AsyncOpenAI
 
 # 确保nltk数据可用
 try:
-    nltk.download('punkt_tab', quiet=True)
+    nltk.download('punkt', quiet=True)
 except:
     pass
 
 # API配置
 BASE_URL = "https://cloud.infini-ai.com/maas/v1"
-API_KEY = "sk-c7owrjsep4p7gk3d"
 MODEL_NAME = "deepseek-v3"
+
+import os
+
+# 从环境变量读取 API 密钥
+API_KEY = os.getenv("OPENAI_API_KEY")
+if not API_KEY:
+    raise EnvironmentError("OPENAI_API_KEY environment variable not set")
 
 
 @dataclass

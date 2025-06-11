@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="dashboard">
+        <aside class="history-panel">
+            <h3>历史记录</h3>
+            <input type="text" id="history-search" placeholder="搜索历史">
+            <ul id="history-list"></ul>
+        </aside>
+        <div class="container">
         <h1>🔧 控制阀装配任务分解系统</h1>
         <p class="subtitle">智能化工序分解 · 并行处理 · 实时可视化</p>
 
@@ -27,6 +33,10 @@
             <div class="progress-container" style="width: 200px;">
                 <progress id="progressBar" value="0" max="100"></progress>
             </div>
+        </div>
+        <div class="metrics" style="display:flex;gap:20px;margin-top:10px;">
+            <span id="metric-processes">工序数: 0</span>
+            <span id="metric-steps">总步数: 0</span>
         </div>
 
         <div id="performance-info" style="display: none;">
@@ -60,7 +70,10 @@
         <div id="excel-window">
             <p style="color: #666; text-align: center; padding: 20px;">请输入任务并点击"开始分解"按钮</p>
         </div>
+        </div>
     </div>
+    <div id="diagram" style="height:400px;margin-top:20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
     <!-- SVG图标 -->
     <svg style="display: none;">

@@ -1,12 +1,14 @@
 # FastAPIProject/app.py
 
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, Query, Request, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse, JSONResponse, HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pathlib import Path
 from fastapi.routing import Mount, APIRoute
+import secrets
 
 import asyncio
 import json
@@ -34,6 +36,21 @@ app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 # 4. 模板
 templates = Jinja2Templates(directory=str(template_dir))
+
+security = HTTPBasic()
+
+def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
+    username = os.getenv("APP_USERNAME", "admin")
+    password = os.getenv("APP_PASSWORD", "secret")
+    correct_username = secrets.compare_digest(credentials.username, username)
+    correct_password = secrets.compare_digest(credentials.password, password)
+    if not (correct_username and correct_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
 
 
 # 检查并导入后端模块
@@ -103,7 +120,7 @@ async def test():
 
 # SSE流式接口
 @app.get("/api/decompose/stream")
-async def decompose_stream(task: str = Query(...)):
+async def decompose_stream(task: str = Query(...), username: str = Depends(get_current_username)):
     print(f"收到SSE请求: task={task}")
 
     async def event_generator():
@@ -127,7 +144,7 @@ async def decompose_stream(task: str = Query(...)):
 
 # JSON完整数据接口
 @app.get("/api/decompose/json")
-async def decompose_json(task: str = Query(...)):
+async def decompose_json(task: str = Query(...), username: str = Depends(get_current_username)):
     print(f"[JSON接口] 收到请求: task={task}")
     try:
         result = await run_full_decomposition(task)
@@ -143,7 +160,7 @@ async def decompose_json(task: str = Query(...)):
 
 # Excel导出接口
 @app.get("/api/export/excel")
-async def export_excel(task: str = Query(...)):
+async def export_excel(task: str = Query(...), username: str = Depends(get_current_username)):
     if not EXCEL_SUPPORT:
         return JSONResponse(
             content={"error": "Excel导出功能未安装，请安装pandas和xlsxwriter"},
