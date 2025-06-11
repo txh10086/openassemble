@@ -8,9 +8,16 @@ from agents import Agent, Runner, OpenAIChatCompletionsModel, set_tracing_disabl
 set_tracing_disabled(True)
 
 # —— OpenAI 客户端配置 ——
+import os
+
 BASE_URL = "https://cloud.infini-ai.com/maas/v1"
-API_KEY = "sk-c7owrjsep4p7gk3d"
 MODEL_NAME = "deepseek-v3"
+
+# 从环境变量读取 API 密钥，避免在代码中硬编码
+API_KEY = os.getenv("OPENAI_API_KEY")
+if not API_KEY:
+    raise EnvironmentError("OPENAI_API_KEY environment variable not set")
+
 client = AsyncOpenAI(base_url=BASE_URL, api_key=API_KEY)
 
 # —— 背景信息 ——

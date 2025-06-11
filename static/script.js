@@ -5,6 +5,80 @@ let currentData = null;
 let currentTask = null;
 let accumulatedJSON = '';  // 累积的JSON字符串
 let lastChunkTime = 0;  // 最后一次chunk更新时间
+let history = JSON.parse(localStorage.getItem('history') || '[]');
+
+function saveHistory(item) {
+    history.unshift(item);
+    history = history.slice(0, 20);
+    localStorage.setItem('history', JSON.stringify(history));
+    renderHistory();
+}
+
+function renderHistory() {
+    const list = document.getElementById('history-list');
+    if (!list) return;
+    const query = document.getElementById('history-search').value.toLowerCase();
+    list.innerHTML = '';
+    history.forEach((h, idx) => {
+        if (query && !h.task.includes(query)) return;
+        const li = document.createElement('li');
+        li.textContent = h.task;
+        li.dataset.index = idx;
+        list.appendChild(li);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderHistory();
+    const search = document.getElementById('history-search');
+    if (search) search.addEventListener('input', renderHistory);
+    const list = document.getElementById('history-list');
+    if (list) {
+        list.addEventListener('click', e => {
+            if (e.target.tagName === 'LI') {
+                const item = history[e.target.dataset.index];
+                if (item && item.data) {
+                    currentData = item.data;
+                    currentTask = item.task;
+                    renderProcessCards(item.data, false);
+                    renderExcelTable(item.data);
+                    updateMetrics(item.data);
+                }
+            }
+        });
+    }
+
+    // 简单的ECharts示例
+    const diagram = document.getElementById('diagram');
+    if (diagram && window.echarts) {
+        const chart = echarts.init(diagram);
+        chart.setOption({
+            tooltip: {},
+            series: [{
+                type: 'graph',
+                layout: 'force',
+                roam: true,
+                data: [
+                    { name: '前端界面', symbolSize: 60 },
+                    { name: 'FastAPI服务器', symbolSize: 60 },
+                    { name: 'OpenAI API', symbolSize: 60 }
+                ],
+                links: [
+                    { source: '前端界面', target: 'FastAPI服务器' },
+                    { source: 'FastAPI服务器', target: 'OpenAI API' }
+                ]
+            }]
+        });
+    }
+});
+
+function updateMetrics(data) {
+    const procCount = data.processes ? data.processes.length : 0;
+    let stepCount = 0;
+    data.processes.forEach(p => { if (p.steps) stepCount += p.steps.length; });
+    document.getElementById('metric-processes').textContent = `工序数: ${procCount}`;
+    document.getElementById('metric-steps').textContent = `总步数: ${stepCount}`;
+}
 
 console.log('页面加载完成');
 
@@ -376,6 +450,8 @@ document.getElementById('taskForm').addEventListener('submit', e => {
                     currentData = finalData;
                     renderProcessCards(finalData, false);
                     renderExcelTable(finalData);
+                    updateMetrics(finalData);
+                    saveHistory({task: currentTask, data: finalData});
                     return;
                 } catch (e) {
                     console.error('解析最终JSON失败:', e);
@@ -437,6 +513,7 @@ document.getElementById('taskForm').addEventListener('submit', e => {
                 currentData = lastValidJson;
                 renderProcessCards(lastValidJson, true);
                 renderExcelTable(lastValidJson);
+                updateMetrics(lastValidJson);
             }
         } catch (e) {
             console.log('JSON解析错误:', e.message);
@@ -468,6 +545,8 @@ document.getElementById('taskForm').addEventListener('submit', e => {
             if (currentData && currentData.processes) {
                 renderProcessCards(currentData, false);
                 renderExcelTable(currentData);
+                updateMetrics(currentData);
+                saveHistory({task: currentTask, data: currentData});
                 document.getElementById('exportExcel').style.display = 'inline-block';
                 document.getElementById('exportJson').style.display = 'inline-block';
                 document.getElementById('excel-title').textContent = `工艺工序分解结果 - ${currentTask}`;
@@ -525,6 +604,8 @@ document.getElementById('taskForm').addEventListener('submit', e => {
             currentData = data;
             renderProcessCards(data, false);
             renderExcelTable(data);
+            updateMetrics(data);
+            saveHistory({task: currentTask, data});
             document.getElementById('exportExcel').style.display = 'inline-block';
             document.getElementById('exportJson').style.display = 'inline-block';
             document.getElementById('excel-title').textContent = `工艺工序分解结果 - ${currentTask}`;

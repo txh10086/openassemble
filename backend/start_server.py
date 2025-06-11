@@ -38,7 +38,7 @@ def download_nltk_data():
     print("\n📥 正在下载NLTK数据...")
     try:
         import nltk
-        nltk.download('punkt_tab', quiet=True)
+        nltk.download('punkt', quiet=True)
         print("✅ NLTK数据下载完成")
     except Exception as e:
         print(f"⚠️  警告：NLTK数据下载失败: {e}")

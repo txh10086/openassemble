@@ -14,7 +14,51 @@ body {
     min-height: 100vh;
 }
 
+.dashboard {
+    display: flex;
+    gap: 20px;
+}
+
+.history-panel {
+    width: 220px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    height: fit-content;
+}
+
+.history-panel h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.history-panel input {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.history-panel ul {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-panel li {
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.history-panel li:hover {
+    text-decoration: underline;
+}
+
 .container {
+    flex: 1;
     background: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 20px;
@@ -102,6 +146,11 @@ input[type="text"]:focus {
     align-items: center;
     gap: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.metrics span {
+    font-weight: bold;
+    color: #2c3e50;
 }
 
 #status {

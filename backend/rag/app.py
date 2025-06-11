@@ -1,8 +1,9 @@
 #app.py
-from fastapi import FastAPI, HTTPException, File, UploadFile, Form, Request
+from fastapi import FastAPI, HTTPException, File, UploadFile, Form, Request, Depends, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from fastapi.responses import HTMLResponse
@@ -25,6 +26,21 @@ static_dir = os.path.join(BASE_DIR, "static")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 templates = Jinja2Templates(directory="templates")
+
+security = HTTPBasic()
+
+def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
+    username = os.getenv("APP_USERNAME", "admin")
+    password = os.getenv("APP_PASSWORD", "secret")
+    import secrets
+    if not (secrets.compare_digest(credentials.username, username) and
+            secrets.compare_digest(credentials.password, password)):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
 
 
 # CORS中间件配置
@@ -75,13 +91,13 @@ class DeleteRequest(BaseModel):
 # 路由定义
 
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
+async def home(request: Request, username: str = Depends(get_current_username)):
     # 渲染 templates/index.html，传入 request 和其他上下文
     return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.get("/api/documents")
-async def get_documents(domain: Optional[str] = None):
+async def get_documents(domain: Optional[str] = None, username: str = Depends(get_current_username)):
     """获取文档列表"""
     docs = kb.list_documents(domain=domain)
     return [
@@ -101,13 +117,13 @@ async def get_documents(domain: Optional[str] = None):
 
 
 @app.get("/api/domains")
-async def get_domains():
+async def get_domains(username: str = Depends(get_current_username)):
     """获取所有领域"""
     return kb.get_domains()
 
 
 @app.get("/api/stats")
-async def get_stats():
+async def get_stats(username: str = Depends(get_current_username)):
     """获取统计信息"""
     docs = list(kb.documents_metadata.values())
     total_words = sum(doc.word_count for doc in docs)
@@ -124,7 +140,7 @@ async def get_stats():
 
 
 @app.post("/api/document/text")
-async def add_text_document(doc: TextDocument):
+async def add_text_document(doc: TextDocument, username: str = Depends(get_current_username)):
     """添加文本文档"""
     try:
         doc_id = kb.add_document_from_text(
@@ -139,7 +155,7 @@ async def add_text_document(doc: TextDocument):
 
 
 @app.post("/api/document/url")
-async def add_url_document(doc: URLDocument):
+async def add_url_document(doc: URLDocument, username: str = Depends(get_current_username)):
     """添加URL文档"""
     try:
         doc_id = kb.add_document_from_url(
@@ -160,7 +176,8 @@ async def add_file_document(
         title: str = Form(...),
         domain: str = Form(...),
         max_pages: Optional[int] = Form(None),
-        version: str = Form("1.0")
+        version: str = Form("1.0"),
+        username: str = Depends(get_current_username)
 ):
     """添加文件文档"""
     if not file.filename.endswith('.pdf'):
@@ -193,7 +210,7 @@ async def add_file_document(
 
 
 @app.post("/api/query")
-async def query_knowledge(query: QueryRequest):
+async def query_knowledge(query: QueryRequest, username: str = Depends(get_current_username)):
     """查询知识库"""
     try:
         result = await query_engine.query(
@@ -208,7 +225,7 @@ async def query_knowledge(query: QueryRequest):
 
 
 @app.delete("/api/document")
-async def delete_document(req: DeleteRequest):
+async def delete_document(req: DeleteRequest, username: str = Depends(get_current_username)):
     """删除文档"""
     if kb.remove_document(req.doc_id):
         return {"message": "文档删除成功"}
@@ -218,7 +235,7 @@ async def delete_document(req: DeleteRequest):
 
 # 健康检查端点
 @app.get("/health")
-async def health_check():
+async def health_check(username: str = Depends(get_current_username)):
     """健康检查"""
     return {
         "status": "healthy",
