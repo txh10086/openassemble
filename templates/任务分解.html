@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工业智能平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景 */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, #00f5ff, #0073ff);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 120px; height: 120px; top: 60%; left: 80%; animation-delay: 5s; }
+        .shape:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 20%; animation-delay: 10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+        }
+
+        /* 顶部导航 */
+        .platform-header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-section h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .version {
+            background: rgba(0, 115, 255, 0.2);
+            color: #00f5ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 115, 255, 0.2);
+            border-color: rgba(0, 245, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .notification-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .user-avatar {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            padding: 0.7rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* 主工作区 */
+        .workspace {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: #00f5ff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .quick-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            background: rgba(0, 115, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .quick-action-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-action-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .quick-action-desc {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 内容区域 */
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* 任务分解模块 */
+        .task-decomposition-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #00f5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 127, 0.1);
+            border: 1px solid rgba(0, 255, 127, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #00ff7f;
+        }
+
+        .ai-indicator {
+            width: 8px;
+            height: 8px;
+            background: #00ff7f;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 输入区域 */
+        .input-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .task-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .task-input:focus {
+            outline: none;
+            border-color: rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .task-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            border: none;
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        /* 结果展示区域 */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .process-flow-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .process-step:hover {
+            background: rgba(0, 115, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.5);
+            transform: translateX(5px);
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #00f5ff, #0073ff);
+            border-radius: 2px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            float: left;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .step-content h4 {
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        /* 统计面板 */
+        .stats-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            background: rgba(0, 115, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+
+            .main-nav {
+                display: none;
+            }
+        }
+
+        /* 加载动画 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #00f5ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            color: #00f5ff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态背景 -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <!-- 顶部导航 -->
+    <header class="platform-header">
+        <div class="logo-section">
+            <h1>🤖 AI工业智能平台</h1>
+            <span class="version">v2.0</span>
+        </div>
+        <nav class="main-nav">
+            <button class="nav-item active" onclick="switchTab('decomposition')">智能分解</button>
+            <button class="nav-item" onclick="switchTab('knowledge')">知识库</button>
+            <button class="nav-item" onclick="switchTab('analytics')">数据分析</button>
+            <button class="nav-item" onclick="switchTab('monitoring')">系统监控</button>
+        </nav>
+        <div class="user-actions">
+            <button class="notification-btn">🔔</button>
+            <div class="user-avatar">Admin</div>
+        </div>
+    </header>
+
+    <!-- 主工作区 -->
+    <main class="workspace">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">快速操作</div>
+                <div class="quick-action" onclick="newTask()">
+                    <div class="quick-action-icon">⚡</div>
+                    <div class="quick-action-title">新建任务</div>
+                    <div class="quick-action-desc">创建新的分解任务</div>
+                </div>
+                <div class="quick-action" onclick="openTemplates()">
+                    <div class="quick-action-icon">📋</div>
+                    <div class="quick-action-title">任务模板</div>
+                    <div class="quick-action-desc">使用预设模板</div>
+                </div>
+                <div class="quick-action" onclick="viewHistory()">
+                    <div class="quick-action-icon">📊</div>
+                    <div class="quick-action-title">历史记录</div>
+                    <div class="quick-action-desc">查看过往任务</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">AI助手</div>
+                <div class="quick-action" onclick="openAIAssistant()">
+                    <div class="quick-action-icon">🧠</div>
+                    <div class="quick-action-title">智能推荐</div>
+                    <div class="quick-action-desc">AI工艺建议</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 内容区域 -->
+        <section class="content-area">
+            <!-- 任务分解模块 -->
+            <div class="task-decomposition-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">智能任务分解系统</h2>
+                    <div class="ai-status">
+                        <div class="ai-indicator"></div>
+                        AI引擎运行中
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <input type="text" class="task-input" placeholder="请输入装配任务，例如：装配DN50球阀" value="装配DN50球阀" id="taskInput">
+                    <button class="analyze-btn" onclick="analyzeTask()">
+                        <span>🔍</span>
+                        开始分析
+                    </button>
+                </div>
+
+                <div class="results-grid">
+                    <!-- 工艺流程 -->
+                    <div class="process-flow-panel">
+                        <h3 style="color: #00f5ff; margin-bottom: 1rem;">🔧 工艺流程</h3>
+                        <div id="processSteps">
+                            <div class="process-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>主副阀体上料</h4>
+                                    <p class="step-description">自动输送系统将主副阀体送至指定工位，完成定位与夹持准备</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>波形弹簧安装</h4>
+                                    <p class="step-description">SCARA机器人精确安装波形弹簧，确保弹簧位置准确</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>阀座阀芯装配</h4>
+                                    <p class="step-description">协作机器人完成阀座、阀杆、阀芯的精密装配</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>最终组装检测</h4>
+                                    <p class="step-description">完成螺栓紧固、密封检测和功能验证</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 统计信息 -->
+                    <div class="stats-panel">
+                        <h3 style="color: #00f5ff; margin-bottom: 1rem;">📊 分析统计</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="processCount">9</div>
+                                <div class="stat-label">工序数量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stepCount">32</div>
+                                <div class="stat-label">工步总数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="estimatedTime">45</div>
+                                <div class="stat-label">预计时间(分)</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="efficiencyScore">94</div>
+                                <div class="stat-label">效率评分</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem;">
+                            <h4 style="color: #00f5ff; margin-bottom: 1rem;">🎯 优化建议</h4>
+                            <div style="background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.3); border-radius: 8px; padding: 1rem;">
+                                <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin: 0;">
+                                    建议在工序3和工序4之间增加质量检测环节，可提升产品合格率约8%
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 导航切换
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // 这里可以添加切换不同模块的逻辑
+            console.log('切换到:', tab);
+        }
+
+        // 任务分析
+        function analyzeTask() {
+            const taskInput = document.getElementById('taskInput');
+            const task = taskInput.value;
+
+            if (!task.trim()) {
+                alert('请输入任务描述');
+                return;
+            }
+
+            // 显示加载动画
+            showLoading();
+
+            // 模拟API调用
+            setTimeout(() => {
+                hideLoading();
+                updateResults();
+                showSuccessMessage('任务分解完成！');
+            }, 3000);
+        }
+
+        // 显示加载动画
+        function showLoading() {
+            const loadingHtml = `
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div style="text-align: center;">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">AI正在分析任务...</div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', loadingHtml);
+        }
+
+        // 隐藏加载动画
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.remove();
+            }
+        }
+
+        // 更新结果
+        function updateResults() {
+            // 随机更新统计数据
+            document.getElementById('processCount').textContent = Math.floor(Math.random() * 5) + 8;
+            document.getElementById('stepCount').textContent = Math.floor(Math.random() * 20) + 25;
+            document.getElementById('estimatedTime').textContent = Math.floor(Math.random() * 30) + 30;
+            document.getElementById('efficiencyScore').textContent = Math.floor(Math.random() * 10) + 90;
+        }
+
+        // 显示成功消息
+        function showSuccessMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #00f5ff, #0073ff);
+                color: #000;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                font-weight: 600;
+                z-index: 1001;
+                animation: slideIn 0.5s ease;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // 快捷操作函数
+        function newTask() {
+            document.getElementById('taskInput').value = '';
+            document.getElementById('taskInput').focus();
+        }
+
+        function openTemplates() {
+            alert('模板功能开发中...');
+        }
+
+        function viewHistory() {
+            alert('历史记录功能开发中...');
+        }
+
+        function openAIAssistant() {
+            alert('AI助手功能开发中...');
+        }
+
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

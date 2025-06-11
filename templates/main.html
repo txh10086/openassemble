@@ -1,0 +1,47 @@
+<!-- 主界面布局建议 -->
+<div class="ai-industrial-platform">
+  <!-- 顶部导航栏 -->
+  <header class="platform-header">
+    <div class="logo-section">
+      <h1>🤖 AI工业智能平台</h1>
+      <span class="version">v2.0</span>
+    </div>
+    <nav class="main-nav">
+      <button class="nav-item active">任务分解</button>
+      <button class="nav-item">知识库</button>
+      <button class="nav-item">数据分析</button>
+      <button class="nav-item">系统监控</button>
+    </nav>
+    <div class="user-actions">
+      <button class="notification-btn">🔔</button>
+      <div class="user-avatar">Admin</div>
+    </div>
+  </header>
+
+  <!-- 主工作区 -->
+  <main class="workspace">
+    <aside class="sidebar">
+      <!-- 功能快捷入口 -->
+    </aside>
+    <section class="content-area">
+      <!-- 动态内容区域 -->
+      <!-- 系统监控模块 -->
+<div class="monitoring-dashboard">
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <canvas id="cpuChart"></canvas>
+            <h4>CPU使用率</h4>
+        </div>
+        <div class="metric-card">
+            <canvas id="memoryChart"></canvas>
+            <h4>内存使用</h4>
+        </div>
+        <div class="metric-card">
+            <div class="large-number" id="taskCount">1,247</div>
+            <h4>今日处理任务</h4>
+        </div>
+    </div>
+</div>
+    </section>
+  </main>
+</div>

@@ -1,74 +1,2177 @@
-<!--FastAPIProject/templates/index.html-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>控制阀装配任务分解系统</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>AI工业智能平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景 */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, #00f5ff, #0073ff);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 120px; height: 120px; top: 60%; left: 80%; animation-delay: 5s; }
+        .shape:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 20%; animation-delay: 10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+        }
+
+        /* 顶部导航 */
+        .platform-header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-section h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .version {
+            background: rgba(0, 115, 255, 0.2);
+            color: #00f5ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 115, 255, 0.2);
+            border-color: rgba(0, 245, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .notification-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .user-avatar {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            padding: 0.7rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* 主工作区 */
+        .workspace {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: #00f5ff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .quick-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            background: rgba(0, 115, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .quick-action-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-action-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .quick-action-desc {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 内容区域 */
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* 任务分解模块 */
+        .task-decomposition-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #00f5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 127, 0.1);
+            border: 1px solid rgba(0, 255, 127, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #00ff7f;
+        }
+
+        .ai-indicator {
+            width: 8px;
+            height: 8px;
+            background: #00ff7f;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 输入区域 */
+        .input-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .task-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .task-input:focus {
+            outline: none;
+            border-color: rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .task-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            border: none;
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        /* 结果展示区域 */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .process-flow-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .process-step:hover {
+            background: rgba(0, 115, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.5);
+            transform: translateX(5px);
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #00f5ff, #0073ff);
+            border-radius: 2px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            float: left;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .step-content h4 {
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        /* 统计面板 */
+        .stats-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            background: rgba(0, 115, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+
+            .main-nav {
+                display: none;
+            }
+        }
+
+        /* 加载动画 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #00f5ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            color: #00f5ff;
+            font-weight: 600;
+        }
+
+        /* 面板加载动画 */
+        .panel-loading {
+            display: flex;
+            align-items: center;
+            color: #00f5ff;
+            font-size: 0.9rem;
+        }
+
+        .mini-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-top: 2px solid #00f5ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        .loading-placeholder {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .placeholder-message {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        /* 下载按钮样式 */
+        .download-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 知识库样式 */
+        .knowledge-base-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .knowledge-main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .knowledge-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .kb-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .kb-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .kb-tab.active {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+        }
+
+        .kb-tab-content {
+            display: none;
+        }
+
+        .kb-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .kb-btn {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            border: none;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .kb-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .kb-btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .kb-btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .kb-query-result {
+            background: rgba(0, 115, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #00f5ff;
+            animation: slideIn 0.5s ease;
+        }
+
+        .answer-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+
+        .confidence {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .confidence.high {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .confidence.medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .confidence.low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .citations {
+            margin-left: 10px;
+            font-size: 0.9em;
+            color: #00f5ff;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .analytics-panel,
+        .monitoring-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .knowledge-main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .download-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔧 控制阀装配任务分解系统</h1>
-        <p class="subtitle">智能化工序分解 · 并行处理 · 实时可视化</p>
-
-        <div class="form-container">
-            <form id="taskForm">
-                <input type="text" id="task" name="task" value="装配DN50球阀" placeholder="请输入装配任务..." required>
-                <button type="submit" class="submit-btn">
-                    <span id="btnText">开始分解</span>
-                    <span id="btnSpinner" style="display: none;">处理中...</span>
-                </button>
-            </form>
-        </div>
-
-        <div class="status-container">
-            <div id="status">准备就绪</div>
-            <div class="progress-container" style="width: 200px;">
-                <progress id="progressBar" value="0" max="100"></progress>
-            </div>
-        </div>
-
-        <div id="performance-info" style="display: none;">
-            <span>⚡ 并行处理模式已启用 - 工步分解速度提升 3-5 倍</span>
-            <span id="parallel-count" style="margin-left: 10px;"></span>
-        </div>
-
-        <div class="process-visualization">
-            <div class="process-header">
-                <h3>工序分解结果 <span id="update-status" class="updating-indicator" style="display: none;">
-                    <span class="updating-dot"></span>实时更新中
-                </span></h3>
-            </div>
-
-            <div id="process-cards" class="process-cards-container">
-                <!-- 动态生成的卡片将显示在这里 -->
-                <div class="loading-card" style="grid-column: 1 / -1;">
-                    <p style="color: #666;">请输入任务并点击"开始分解"按钮</p>
-                </div>
-            </div>
-        </div>
-
-        <h3>Excel 格式视图：</h3>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span id="excel-title">工艺工序分解结果</span>
-            <div style="display: flex; gap: 10px;">
-                <button id="exportJson" style="display: none;" onclick="exportToJSON()" class="export-btn json-btn">导出JSON</button>
-                <button id="exportExcel" style="display: none;" onclick="exportToExcel()" class="export-btn excel-btn">导出Excel</button>
-            </div>
-        </div>
-        <div id="excel-window">
-            <p style="color: #666; text-align: center; padding: 20px;">请输入任务并点击"开始分解"按钮</p>
+    <!-- 动态背景 -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
         </div>
     </div>
 
-    <!-- SVG图标 -->
-    <svg style="display: none;">
-        <symbol id="expand-icon" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-        </symbol>
-    </svg>
+    <!-- 顶部导航 -->
+    <header class="platform-header">
+        <div class="logo-section">
+            <h1>🤖 AI工业智能平台</h1>
+            <span class="version">v2.0</span>
+        </div>
+        <nav class="main-nav">
+            <button class="nav-item active" onclick="switchTab('decomposition')">智能分解</button>
+            <button class="nav-item" onclick="switchTab('knowledge')">知识库</button>
+            <button class="nav-item" onclick="switchTab('analytics')">数据分析</button>
+            <button class="nav-item" onclick="switchTab('monitoring')">系统监控</button>
+        </nav>
+        <div class="user-actions">
+            <button class="notification-btn">🔔</button>
+            <div class="user-avatar">Admin</div>
+        </div>
+    </header>
 
-    <script src="/static/script.js"></script>
+    <!-- 主工作区 -->
+    <main class="workspace">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">快速操作</div>
+                <div class="quick-action" onclick="newTask()">
+                    <div class="quick-action-icon">⚡</div>
+                    <div class="quick-action-title">新建任务</div>
+                    <div class="quick-action-desc">创建新的分解任务</div>
+                </div>
+                <div class="quick-action" onclick="openTemplates()">
+                    <div class="quick-action-icon">📋</div>
+                    <div class="quick-action-title">任务模板</div>
+                    <div class="quick-action-desc">使用预设模板</div>
+                </div>
+                <div class="quick-action" onclick="viewHistory()">
+                    <div class="quick-action-icon">📊</div>
+                    <div class="quick-action-title">历史记录</div>
+                    <div class="quick-action-desc">查看过往任务</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">AI助手</div>
+                <div class="quick-action" onclick="openAIAssistant()">
+                    <div class="quick-action-icon">🧠</div>
+                    <div class="quick-action-title">智能推荐</div>
+                    <div class="quick-action-desc">AI工艺建议</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 内容区域 -->
+        <section class="content-area">
+            <!-- 任务分解模块 -->
+            <div class="task-decomposition-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">智能任务分解系统</h2>
+                    <div class="ai-status">
+                        <div class="ai-indicator"></div>
+                        AI引擎运行中
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <input type="text" class="task-input" placeholder="请输入装配任务，例如：装配DN50球阀" value="装配DN50球阀" id="taskInput">
+                    <button class="analyze-btn" onclick="analyzeTask()">
+                        <span>🔍</span>
+                        开始分析
+                    </button>
+                </div>
+
+                <div class="results-grid">
+                    <!-- 工艺流程 -->
+                    <div class="process-flow-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="color: #00f5ff; margin: 0;">🔧 工艺流程</h3>
+                            <div class="panel-loading" id="processLoading" style="display: none;">
+                                <div class="mini-spinner"></div>
+                                <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">分析中...</span>
+                            </div>
+                        </div>
+                        <div id="processSteps">
+                            <div class="placeholder-message">
+                                <span style="color: rgba(255, 255, 255, 0.6);">请输入任务并点击"开始分析"</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 统计信息 -->
+                    <div class="stats-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="color: #00f5ff; margin: 0;">📊 分析统计</h3>
+                            <div class="panel-loading" id="statsLoading" style="display: none;">
+                                <div class="mini-spinner"></div>
+                                <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">计算中...</span>
+                            </div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="processCount">-</div>
+                                <div class="stat-label">工序数量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stepCount">-</div>
+                                <div class="stat-label">工步总数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="estimatedTime">-</div>
+                                <div class="stat-label">预计时间(分)</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="efficiencyScore">-</div>
+                                <div class="stat-label">效率评分</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem;" id="optimizationSection">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h4 style="color: #00f5ff; margin: 0;">🎯 优化建议</h4>
+                                <div class="panel-loading" id="optimizationLoading" style="display: none;">
+                                    <div class="mini-spinner"></div>
+                                    <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">生成中...</span>
+                                </div>
+                            </div>
+                            <div id="optimizationContent" style="background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.3); border-radius: 8px; padding: 1rem;">
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0; font-style: italic;">
+                                    等待分析完成后生成优化建议...
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 下载按钮区域 -->
+                        <div style="margin-top: 2rem;" id="downloadSection" style="display: none;">
+                            <h4 style="color: #00f5ff; margin-bottom: 1rem;">📥 结果导出</h4>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <button class="download-btn" onclick="downloadJSON()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                    <span>📄</span>
+                                    下载JSON
+                                </button>
+                                <button class="download-btn" onclick="downloadExcel()" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                    <span>📊</span>
+                                    下载Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 导航切换
+        function switchTab(tab) {
+            // 移除所有active状态
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // 隐藏所有内容区域
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // 设置当前按钮为active
+            event.target.classList.add('active');
+
+            // 显示对应的内容区域
+            const contentArea = document.querySelector('.content-area');
+
+            switch(tab) {
+                case 'decomposition':
+                    showDecompositionTab();
+                    break;
+                case 'knowledge':
+                    showKnowledgeTab();
+                    break;
+                case 'analytics':
+                    showAnalyticsTab();
+                    break;
+                case 'monitoring':
+                    showMonitoringTab();
+                    break;
+            }
+        }
+
+        // 显示知识库标签页
+        function showKnowledgeTab() {
+            const contentArea = document.querySelector('.content-area');
+            contentArea.innerHTML = `
+                <!-- 知识库模块 -->
+                <div class="knowledge-base-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">RAG专家知识库系统</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            DeepSeek-V3驱动
+                        </div>
+                    </div>
+
+                    <!-- 统计信息 -->
+                    <div class="stats-panel" style="margin-bottom: 2rem;">
+                        <h3 style="color: #00f5ff; margin-bottom: 1rem;">📊 知识库统计</h3>
+                        <div class="stats-grid" id="kbStatsGrid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalDocs">-</div>
+                                <div class="stat-label">文档总数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalDomains">-</div>
+                                <div class="stat-label">领域数量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalWords">-</div>
+                                <div class="stat-label">总词数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalTokens">-</div>
+                                <div class="stat-label">总Token数</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="knowledge-main-grid">
+                        <!-- 添加文档 -->
+                        <div class="knowledge-panel">
+                            <h3 style="color: #00f5ff; margin-bottom: 1rem;">📝 添加文档</h3>
+
+                            <div class="kb-tabs">
+                                <div class="kb-tab active" onclick="switchKBTab('text')">文本</div>
+                                <div class="kb-tab" onclick="switchKBTab('url')">URL</div>
+                                <div class="kb-tab" onclick="switchKBTab('file')">文件</div>
+                            </div>
+
+                            <!-- 文本输入 -->
+                            <div id="textKBTab" class="kb-tab-content active">
+                                <form id="kbTextForm" onsubmit="addTextDocument(event)">
+                                    <div class="form-group">
+                                        <label>文档标题</label>
+                                        <input type="text" name="title" required placeholder="请输入文档标题">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>专业领域</label>
+                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>文档内容</label>
+                                        <textarea name="text" required placeholder="请输入或粘贴文档内容..." rows="8"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>版本号</label>
+                                        <input type="text" name="version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <button type="submit" class="kb-btn">
+                                        <span>💾</span>
+                                        添加文本文档
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- URL输入 -->
+                            <div id="urlKBTab" class="kb-tab-content">
+                                <form id="kbUrlForm" onsubmit="addUrlDocument(event)">
+                                    <div class="form-group">
+                                        <label>PDF URL</label>
+                                        <input type="url" name="url" required placeholder="https://example.com/document.pdf">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>文档标题</label>
+                                        <input type="text" name="title" required placeholder="请输入文档标题">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>专业领域</label>
+                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>最大页数（可选）</label>
+                                        <input type="number" name="max_pages" min="1" placeholder="留空表示处理全部页面">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>版本号</label>
+                                        <input type="text" name="version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <button type="submit" class="kb-btn">
+                                        <span>🌐</span>
+                                        从URL添加
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- 文件上传 -->
+                            <div id="fileKBTab" class="kb-tab-content">
+                                <form id="kbFileForm" onsubmit="addFileDocument(event)">
+                                    <div class="form-group">
+                                        <label>选择PDF文件</label>
+                                        <input type="file" name="file" accept=".pdf" required style="color: white;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>文档标题</label>
+                                        <input type="text" name="title" required placeholder="请输入文档标题">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>专业领域</label>
+                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>最大页数（可选）</label>
+                                        <input type="number" name="max_pages" min="1" placeholder="留空表示全部页面">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>版本号</label>
+                                        <input type="text" name="version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <button type="submit" class="kb-btn">
+                                        <span>📁</span>
+                                        上传文件
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- 智能问答 -->
+                        <div class="knowledge-panel">
+                            <h3 style="color: #00f5ff; margin-bottom: 1rem;">❓ 智能问答</h3>
+
+                            <form id="kbQueryForm" onsubmit="queryKnowledge(event)">
+                                <div class="form-group">
+                                    <label>查询范围</label>
+                                    <select id="kbQueryScope" onchange="updateKBQueryScope()">
+                                        <option value="all">全部文档</option>
+                                        <option value="domain">指定领域</option>
+                                        <option value="docs">指定文档</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="kbDomainSelect" style="display: none;">
+                                    <label>选择领域</label>
+                                    <select id="kbDomainFilter">
+                                        <option value="">请选择领域</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="kbDocsSelect" style="display: none;">
+                                    <label>选择文档（可多选）</label>
+                                    <div class="documents-list" id="kbDocsList" style="max-height: 200px; overflow-y: auto;">
+                                        <!-- 动态加载文档列表 -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>搜索深度</label>
+                                    <input type="range" id="kbMaxDepth" min="1" max="5" value="2" oninput="updateKBDepthLabel(this.value)">
+                                    <span id="kbDepthLabel">深度: 2</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>输入你的问题</label>
+                                    <textarea name="question" required placeholder="请输入你想了解的问题..." rows="4"></textarea>
+                                </div>
+
+                                <button type="submit" class="kb-btn">
+                                    <span>🔍</span>
+                                    开始查询
+                                </button>
+                            </form>
+
+                            <div class="loading" id="kbQueryLoading" style="display: none;">
+                                <div class="mini-spinner"></div>
+                                <p>正在搜索答案，请稍候...</p>
+                            </div>
+
+                            <div id="kbQueryResult" style="display: none; margin-top: 1rem;">
+                                <!-- 查询结果将显示在这里 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 文档管理 -->
+                    <div class="knowledge-panel" style="margin-top: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="color: #00f5ff; margin: 0;">📚 文档管理</h3>
+                            <div style="display: flex; gap: 1rem;">
+                                <input type="text" id="kbSearchDocs" placeholder="搜索文档..." style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; background: rgba(255,255,255,0.1); color: white;" oninput="filterKBDocuments()">
+                                <button onclick="loadKBDocuments()" class="kb-btn" style="padding: 0.5rem 1rem;">
+                                    <span>🔄</span>
+                                    刷新
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="documents-list" id="kbDocumentsList" style="max-height: 400px; overflow-y: auto;">
+                            <!-- 文档列表将显示在这里 -->
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 初始化知识库
+            initKnowledgeBase();
+        }
+            const contentArea = document.querySelector('.content-area');
+            contentArea.innerHTML = `
+                <!-- 任务分解模块 -->
+                <div class="task-decomposition-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">智能任务分解系统</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            AI引擎运行中
+                        </div>
+                    </div>
+
+                    <div class="input-section">
+                        <input type="text" class="task-input" placeholder="请输入装配任务，例如：装配DN50球阀" value="装配DN50球阀" id="taskInput">
+                        <button class="analyze-btn" onclick="analyzeTask()">
+                            <span>🔍</span>
+                            开始分析
+                        </button>
+                    </div>
+
+                    <div class="results-grid">
+                        <!-- 工艺流程 -->
+                        <div class="process-flow-panel">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h3 style="color: #00f5ff; margin: 0;">🔧 工艺流程</h3>
+                                <div class="panel-loading" id="processLoading" style="display: none;">
+                                    <div class="mini-spinner"></div>
+                                    <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">分析中...</span>
+                                </div>
+                            </div>
+                            <div id="processSteps">
+                                <div class="placeholder-message">
+                                    <span style="color: rgba(255, 255, 255, 0.6);">请输入任务并点击"开始分析"</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 统计信息 -->
+                        <div class="stats-panel">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h3 style="color: #00f5ff; margin: 0;">📊 分析统计</h3>
+                                <div class="panel-loading" id="statsLoading" style="display: none;">
+                                    <div class="mini-spinner"></div>
+                                    <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">计算中...</span>
+                                </div>
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-value" id="processCount">-</div>
+                                    <div class="stat-label">工序数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="stepCount">-</div>
+                                    <div class="stat-label">工步总数</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="estimatedTime">-</div>
+                                    <div class="stat-label">预计时间(分)</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="efficiencyScore">-</div>
+                                    <div class="stat-label">效率评分</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 2rem;" id="optimizationSection">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h4 style="color: #00f5ff; margin: 0;">🎯 优化建议</h4>
+                                    <div class="panel-loading" id="optimizationLoading" style="display: none;">
+                                        <div class="mini-spinner"></div>
+                                        <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">生成中...</span>
+                                    </div>
+                                </div>
+                                <div id="optimizationContent" style="background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.3); border-radius: 8px; padding: 1rem;">
+                                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0; font-style: italic;">
+                                        等待分析完成后生成优化建议...
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 下载按钮区域 -->
+                            <div style="margin-top: 2rem; display: none;" id="downloadSection">
+                                <h4 style="color: #00f5ff; margin-bottom: 1rem;">📥 结果导出</h4>
+                                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                    <button class="download-btn" onclick="downloadJSON()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                        <span>📄</span>
+                                        下载JSON
+                                    </button>
+                                    <button class="download-btn" onclick="downloadExcel()" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                        <span>📊</span>
+                                        下载Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 全局变量存储当前任务数据
+        let currentTaskData = null;
+        let currentTaskName = '';
+
+        // 任务分析 - 整合原有API
+        function analyzeTask() {
+            const taskInput = document.getElementById('taskInput');
+            const task = taskInput.value;
+
+            if (!task.trim()) {
+                alert('请输入任务描述');
+                return;
+            }
+
+            currentTaskName = task;
+
+            // 显示各个面板的加载状态
+            showPanelLoading();
+
+            // 调用原有的任务分解API
+            fetch(`/api/decompose/json?task=${encodeURIComponent(task)}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentTaskData = data;
+                    hidePanelLoading();
+                    displayProcessResults(data);
+                    updateStatistics(data);
+                    generateOptimization(data);
+                    showDownloadSection();
+                    showSuccessMessage('任务分解完成！');
+                })
+                .catch(error => {
+                    hidePanelLoading();
+                    console.error('任务分解失败:', error);
+                    showErrorMessage('任务分解失败，请重试');
+                    resetPanels();
+                });
+        }
+
+        // 显示面板加载状态
+        function showPanelLoading() {
+            document.getElementById('processLoading').style.display = 'flex';
+            document.getElementById('statsLoading').style.display = 'flex';
+            document.getElementById('optimizationLoading').style.display = 'flex';
+
+            // 清空内容显示加载状态
+            document.getElementById('processSteps').innerHTML = `
+                <div class="loading-placeholder">
+                    <div class="mini-spinner"></div>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1rem;">正在分析工艺流程...</p>
+                </div>
+            `;
+        }
+
+        // 隐藏面板加载状态
+        function hidePanelLoading() {
+            document.getElementById('processLoading').style.display = 'none';
+            document.getElementById('statsLoading').style.display = 'none';
+
+            // 延迟隐藏优化建议的loading，模拟AI思考过程
+            setTimeout(() => {
+                document.getElementById('optimizationLoading').style.display = 'none';
+            }, 1500);
+        }
+
+        // 重置面板内容
+        function resetPanels() {
+            document.getElementById('processSteps').innerHTML = `
+                <div class="placeholder-message">
+                    <span style="color: rgba(255, 255, 255, 0.6);">分析失败，请重试</span>
+                </div>
+            `;
+
+            document.getElementById('processCount').textContent = '-';
+            document.getElementById('stepCount').textContent = '-';
+            document.getElementById('estimatedTime').textContent = '-';
+            document.getElementById('efficiencyScore').textContent = '-';
+
+        // 显示数据分析标签页
+        function showAnalyticsTab() {
+            const contentArea = document.querySelector('.content-area');
+            contentArea.innerHTML = `
+                <div class="analytics-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">数据分析中心</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            分析引擎运行中
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <h3>🚧 功能开发中</h3>
+                        <p>数据分析功能正在开发中，敬请期待...</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 显示系统监控标签页
+        function showMonitoringTab() {
+            const contentArea = document.querySelector('.content-area');
+            contentArea.innerHTML = `
+                <div class="monitoring-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">系统监控中心</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            监控系统运行中
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <h3>🚧 功能开发中</h3>
+                        <p>系统监控功能正在开发中，敬请期待...</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 知识库相关变量
+        let kbAllDocuments = [];
+        let kbSelectedDocIds = new Set();
+
+        // 初始化知识库
+        async function initKnowledgeBase() {
+            await loadKBStats();
+            await loadKBDocuments();
+            await loadKBDomains();
+        }
+
+        // 加载知识库统计信息
+        async function loadKBStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+
+                document.getElementById('totalDocs').textContent = stats.total_docs || 0;
+                document.getElementById('totalDomains').textContent = stats.total_domains || 0;
+                document.getElementById('totalWords').textContent = stats.total_words ? stats.total_words.toLocaleString() : 0;
+                document.getElementById('totalTokens').textContent = stats.total_tokens ? stats.total_tokens.toLocaleString() : 0;
+            } catch (error) {
+                console.error('加载统计信息失败:', error);
+            }
+        }
+
+        // 加载知识库文档列表
+        async function loadKBDocuments() {
+            try {
+                const response = await fetch('/api/documents');
+                const data = await response.json();
+                kbAllDocuments = data;
+                renderKBDocuments();
+                renderKBDocumentsList();
+            } catch (error) {
+                console.error('加载文档失败:', error);
+                showErrorMessage('加载文档失败: ' + error.message);
+            }
+        }
+
+        // 加载知识库领域列表
+        async function loadKBDomains() {
+            try {
+                const response = await fetch('/api/domains');
+                const domains = await response.json();
+                const select = document.getElementById('kbDomainFilter');
+                if (select) {
+                    select.innerHTML = '<option value="">请选择领域</option>';
+                    domains.forEach(domain => {
+                        select.innerHTML += `<option value="${domain}">${domain}</option>`;
+                    });
+                }
+            } catch (error) {
+                console.error('加载领域失败:', error);
+            }
+        }
+
+        // 知识库标签页切换
+        function switchKBTab(tabName) {
+            // 移除所有active类
+            document.querySelectorAll('.kb-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.kb-tab-content').forEach(content => content.classList.remove('active'));
+
+            // 添加active类到被点击的标签
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'KBTab').classList.add('active');
+        }
+
+        // 更新查询范围
+        function updateKBQueryScope() {
+            const scope = document.getElementById('kbQueryScope').value;
+            document.getElementById('kbDomainSelect').style.display = scope === 'domain' ? 'block' : 'none';
+            document.getElementById('kbDocsSelect').style.display = scope === 'docs' ? 'block' : 'none';
+        }
+
+        // 更新深度标签
+        function updateKBDepthLabel(value) {
+            document.getElementById('kbDepthLabel').textContent = `深度: ${value}`;
+        }
+
+        // 添加文本文档
+        async function addTextDocument(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('/api/document/text', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
+                    event.target.reset();
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('添加失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('添加失败: ' + error.message);
+            }
+        }
+
+        // 添加URL文档
+        async function addUrlDocument(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            if (data.max_pages) {
+                data.max_pages = parseInt(data.max_pages);
+            } else {
+                delete data.max_pages;
+            }
+
+            try {
+                const response = await fetch('/api/document/url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
+                    event.target.reset();
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('添加失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('添加失败: ' + error.message);
+            }
+        }
+
+        // 添加文件文档
+        async function addFileDocument(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            if (!formData.get('max_pages')) {
+                formData.delete('max_pages');
+            }
+
+            try {
+                const response = await fetch('/api/document/file', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
+                    event.target.reset();
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('添加失败: ' + JSON.stringify(error));
+                }
+            } catch (error) {
+                showErrorMessage('添加失败: ' + error.message);
+            }
+        }
+
+        // 查询知识库
+        async function queryKnowledge(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const scope = document.getElementById('kbQueryScope').value;
+
+            const queryData = {
+                question: formData.get('question'),
+                max_depth: parseInt(document.getElementById('kbMaxDepth').value)
+            };
+
+            if (scope === 'domain' && document.getElementById('kbDomainFilter').value) {
+                queryData.domain = document.getElementById('kbDomainFilter').value;
+            } else if (scope === 'docs' && kbSelectedDocIds.size > 0) {
+                queryData.doc_ids = Array.from(kbSelectedDocIds);
+            }
+
+            document.getElementById('kbQueryLoading').style.display = 'block';
+            document.getElementById('kbQueryResult').style.display = 'none';
+
+            try {
+                const response = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(queryData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    displayKBQueryResult(result);
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('查询失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('查询失败: ' + error.message);
+            } finally {
+                document.getElementById('kbQueryLoading').style.display = 'none';
+            }
+        }
+
+        // 显示查询结果
+        function displayKBQueryResult(result) {
+            const resultDiv = document.getElementById('kbQueryResult');
+
+            let html = '<div class="kb-query-result">';
+            html += `<div class="answer-text">${result.answer.replace(/\n/g, '<br>')}</div>`;
+            html += '<div style="display: flex; align-items: center; gap: 10px; margin-top: 1rem;">';
+            html += `<span class="confidence ${result.confidence}">${result.confidence.toUpperCase()} 置信度</span>`;
+
+            if (result.citations && result.citations.length > 0) {
+                html += `<div class="citations">引用: ${result.citations.join(', ')}</div>`;
+            }
+            html += '</div>';
+
+            if (result.paragraphs && result.paragraphs.length > 0) {
+                html += '<details style="margin-top: 20px;">';
+                html += '<summary style="cursor: pointer; font-weight: 600; color: #00f5ff;">查看引用段落</summary>';
+                html += '<div style="margin-top: 10px;">';
+                result.paragraphs.slice(0, 3).forEach((para, idx) => {
+                    html += `
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; margin-top: 10px; border-radius: 10px; border-left: 3px solid #00f5ff;">
+                            <div style="font-size: 0.9em; color: #00f5ff; margin-bottom: 5px;">
+                                段落 ${para.display_id || para.id} - 来源: ${para.doc_title || '未知文档'}
+                            </div>
+                            <div style="color: rgba(255,255,255,0.9);">
+                                ${para.text.substring(0, 300)}${para.text.length > 300 ? '...' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div></details>';
+            }
+
+            html += '</div>';
+
+            resultDiv.innerHTML = html;
+            resultDiv.style.display = 'block';
+        }
+
+        // 渲染文档列表（用于查询）
+        function renderKBDocuments() {
+            const docsList = document.getElementById('kbDocsList');
+            if (!docsList) return;
+
+            docsList.innerHTML = kbAllDocuments.map(doc => `
+                <div class="document-item ${kbSelectedDocIds.has(doc.doc_id) ? 'selected' : ''}"
+                     onclick="toggleKBDocSelection('${doc.doc_id}')">
+                    <div class="document-title">${doc.title}</div>
+                    <div class="document-meta">
+                        <span class="domain-tag">${doc.domain}</span>
+                        <span class="meta-item">版本: ${doc.version}</span>
+                        <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染文档列表（用于管理）
+        function renderKBDocumentsList() {
+            const documentsList = document.getElementById('kbDocumentsList');
+            if (!documentsList) return;
+
+            documentsList.innerHTML = kbAllDocuments.map(doc => `
+                <div class="document-item" style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div class="document-title">${doc.title}</div>
+                            <div class="document-meta">
+                                <span class="domain-tag">${doc.domain}</span>
+                                <span class="meta-item">ID: ${doc.doc_id}</span>
+                                <span class="meta-item">版本: ${doc.version}</span>
+                                <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
+                                <span class="meta-item">创建于: ${new Date(doc.created_at).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <button class="kb-btn-danger" onclick="deleteKBDocument('${doc.doc_id}', '${doc.title}')" style="background: #dc3545; padding: 0.5rem 1rem;">
+                            🗑️ 删除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 切换文档选择
+        function toggleKBDocSelection(docId) {
+            if (kbSelectedDocIds.has(docId)) {
+                kbSelectedDocIds.delete(docId);
+            } else {
+                kbSelectedDocIds.add(docId);
+            }
+            renderKBDocuments();
+        }
+
+        // 过滤文档
+        function filterKBDocuments() {
+            const searchTerm = document.getElementById('kbSearchDocs').value.toLowerCase();
+            const filtered = kbAllDocuments.filter(doc =>
+                doc.title.toLowerCase().includes(searchTerm) ||
+                doc.domain.toLowerCase().includes(searchTerm)
+            );
+
+            const documentsList = document.getElementById('kbDocumentsList');
+            if (!documentsList) return;
+
+            documentsList.innerHTML = filtered.map(doc => `
+                <div class="document-item" style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div class="document-title">${doc.title}</div>
+                            <div class="document-meta">
+                                <span class="domain-tag">${doc.domain}</span>
+                                <span class="meta-item">ID: ${doc.doc_id}</span>
+                                <span class="meta-item">版本: ${doc.version}</span>
+                                <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
+                                <span class="meta-item">创建于: ${new Date(doc.created_at).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <button class="kb-btn-danger" onclick="deleteKBDocument('${doc.doc_id}', '${doc.title}')" style="background: #dc3545; padding: 0.5rem 1rem;">
+                            🗑️ 删除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 生成优化建议
+        function generateOptimization(data) {
+            const optimizationContent = document.getElementById('optimizationContent');
+            if (!optimizationContent) return;
+
+            // 模拟AI分析过程
+            setTimeout(() => {
+                const suggestions = [
+                    "建议在关键工序间增加质量检测环节，可提升产品合格率约8%",
+                    "优化工序顺序可减少约15%的生产时间",
+                    "并行执行某些独立工序可提高整体效率",
+                    "建议增加预防性维护检查点，降低设备故障风险",
+                    "优化物料供应时序，减少等待时间"
+                ];
+
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+
+                optimizationContent.innerHTML = `
+                    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin: 0;">
+                        💡 ${randomSuggestion}
+                    </p>
+                `;
+            }, 1500);
+        }
+
+        // 显示下载区域
+        function showDownloadSection() {
+            const downloadSection = document.getElementById('downloadSection');
+            if (downloadSection) {
+                downloadSection.style.display = 'block';
+            }
+        }
+            if (!confirm(`确定要删除文档 "${title}" 吗？`)) return;
+
+            try {
+                const response = await fetch('/api/document', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ doc_id: docId })
+                });
+
+                if (response.ok) {
+                    showSuccessMessage('文档删除成功');
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('删除失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('删除失败: ' + error.message);
+            }
+        }
+                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0; font-style: italic;">
+                    等待分析完成后生成优化建议...
+                </p>
+            `;
+
+            document.getElementById('downloadSection').style.display = 'none';
+        }
+
+        // 显示工艺流程结果
+        function displayProcessResults(data) {
+            const processStepsContainer = document.getElementById('processSteps');
+            if (!data || !data.processes) {
+                processStepsContainer.innerHTML = '<p style="color: rgba(255,255,255,0.7);">暂无工艺流程数据</p>';
+                return;
+            }
+
+            processStepsContainer.innerHTML = '';
+
+            data.processes.forEach((process, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'process-step';
+                stepElement.onclick = () => showStepDetails(process);
+
+                stepElement.innerHTML = `
+                    <div class="step-number">${process.process_id || index + 1}</div>
+                    <div class="step-content">
+                        <h4>${process.name || '工序' + (index + 1)}</h4>
+                        <p class="step-description">${process.description || '暂无描述'}</p>
+                        ${process.steps ? `<small style="color: #00f5ff;">包含 ${process.steps.length} 个工步</small>` : ''}
+                    </div>
+                `;
+
+                processStepsContainer.appendChild(stepElement);
+            });
+        }
+
+        // 更新统计数据
+        function updateStatistics(data) {
+            const processCount = data.processes ? data.processes.length : 0;
+            let totalSteps = 0;
+            let estimatedTime = 0;
+
+            if (data.processes) {
+                data.processes.forEach(p => {
+                    if (p.steps) {
+                        totalSteps += p.steps.length;
+                        estimatedTime += p.steps.length * 3; // 假设每工步3分钟
+                    }
+                });
+            }
+
+            // 计算效率评分（示例算法）
+            const efficiency = Math.min(95, Math.max(75, 100 - processCount * 2 - totalSteps * 0.5));
+
+            // 动画更新数字
+            animateNumber('processCount', processCount);
+            animateNumber('stepCount', totalSteps);
+            animateNumber('estimatedTime', estimatedTime);
+            animateNumber('efficiencyScore', Math.round(efficiency));
+        }
+
+        // 数字动画效果
+        function animateNumber(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const startValue = 0;
+            const duration = 1000;
+            const startTime = performance.now();
+
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = Math.round(startValue + (targetValue - startValue) * progress);
+
+                element.textContent = currentValue;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            }
+
+            requestAnimationFrame(updateNumber);
+        }
+
+        // 生成优化建议
+        function generateOptimization(data) {
+            const optimizationContent = document.getElementById('optimizationContent');
+
+            // 模拟AI分析过程
+            setTimeout(() => {
+                const suggestions = [
+                    "建议在关键工序间增加质量检测环节，可提升产品合格率约8%",
+                    "优化工序顺序可减少约15%的生产时间",
+                    "并行执行某些独立工序可提高整体效率",
+                    "建议增加预防性维护检查点，降低设备故障风险",
+                    "优化物料供应时序，减少等待时间"
+                ];
+
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+
+                optimizationContent.innerHTML = `
+                    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin: 0;">
+                        💡 ${randomSuggestion}
+                    </p>
+                `;
+            }, 1500);
+        }
+
+        // 显示下载区域
+        function showDownloadSection() {
+            document.getElementById('downloadSection').style.display = 'block';
+        }
+
+        // 下载JSON文件
+        function downloadJSON() {
+            if (!currentTaskData) {
+                showErrorMessage('没有可下载的数据');
+                return;
+            }
+
+            const exportData = {
+                task: currentTaskName,
+                exportTime: new Date().toISOString(),
+                data: currentTaskData
+            };
+
+            const jsonString = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8;' });
+
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+            const filename = `工艺分解结果_${currentTaskName}_${timestamp}.json`;
+            link.setAttribute('download', filename);
+
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showSuccessMessage('JSON文件下载成功！');
+        }
+
+        // 下载Excel文件
+        function downloadExcel() {
+            if (!currentTaskData || !currentTaskName) {
+                showErrorMessage('没有可下载的数据');
+                return;
+            }
+
+            const downloadBtn = event.target;
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<span>⏳</span> 生成中...';
+            downloadBtn.disabled = true;
+
+            const exportUrl = `/api/export/excel?task=${encodeURIComponent(currentTaskName)}`;
+
+            fetch(exportUrl)
+                .then(response => {
+                    if (response.ok) {
+                        // 获取文件名
+                        const contentDisposition = response.headers.get('Content-Disposition');
+                        let filename = 'export.xlsx';
+                        if (contentDisposition) {
+                            const matches = /filename\*=UTF-8''(.+)/.exec(contentDisposition);
+                            if (matches) {
+                                filename = decodeURIComponent(matches[1]);
+                            }
+                        }
+
+                        // 创建下载链接
+                        return response.blob().then(blob => {
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', filename);
+
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(url);
+
+                            showSuccessMessage('Excel文件下载成功！');
+                        });
+                    } else {
+                        // 如果Excel失败，尝试CSV
+                        return response.json().then(error => {
+                            console.log('Excel下载失败，尝试CSV:', error);
+                            return downloadCSVFallback();
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Excel下载失败:', error);
+                    // 尝试CSV备用方案
+                    downloadCSVFallback();
+                })
+                .finally(() => {
+                    downloadBtn.innerHTML = originalText;
+                    downloadBtn.disabled = false;
+                });
+        }
+
+        // CSV备用下载方案
+        function downloadCSVFallback() {
+            console.log('使用CSV备用方案');
+            const csvUrl = `/api/export/csv?task=${encodeURIComponent(currentTaskName)}`;
+
+            return fetch(csvUrl)
+                .then(response => {
+                    if (response.ok) {
+                        const contentDisposition = response.headers.get('Content-Disposition');
+                        let filename = 'export.csv';
+                        if (contentDisposition) {
+                            const matches = /filename\*=UTF-8''(.+)/.exec(contentDisposition);
+                            if (matches) {
+                                filename = decodeURIComponent(matches[1]);
+                            }
+                        }
+
+                        return response.blob().then(blob => {
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', filename);
+
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(url);
+
+                            showSuccessMessage('CSV文件下载成功！(Excel功能暂不可用)');
+                        });
+                    } else {
+                        throw new Error('CSV下载也失败了');
+                    }
+                })
+                .catch(error => {
+                    console.error('CSV下载也失败:', error);
+                    showErrorMessage('文件下载失败，请重试');
+                });
+        }
+
+        // 显示工步详情
+        function showStepDetails(process) {
+            if (!process.steps || process.steps.length === 0) {
+                alert('该工序暂无详细工步信息');
+                return;
+            }
+
+            let stepsHtml = `
+                <div style="background: rgba(0,0,0,0.8); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                    <div style="background: rgba(15, 15, 35, 0.98); border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; padding: 2rem; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="color: #00f5ff; margin: 0;">${process.name} - 详细工步</h3>
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">×</button>
+                        </div>
+                        <div>
+            `;
+
+            process.steps.forEach((step, index) => {
+                stepsHtml += `
+                    <div style="background: rgba(255, 255, 255, 0.05); border-left: 3px solid #00f5ff; padding: 1rem; margin-bottom: 0.8rem; border-radius: 0 8px 8px 0;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                            <span style="background: #00f5ff; color: #000; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">${step.step_id || index + 1}</span>
+                            <span style="color: #00f5ff; font-size: 0.9rem;">${step.unit || ''}</span>
+                        </div>
+                        <div style="margin-left: 35px; color: rgba(255,255,255,0.9);">
+                            <div style="color: #0073ff; font-weight: 500; margin-bottom: 0.3rem;">🔧 ${step.device || '设备未指定'}</div>
+                            <div style="line-height: 1.4;">${step.action || '操作说明暂无'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            stepsHtml += `
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', stepsHtml);
+        }
+
+        // 更新结果
+        function updateResults() {
+            // 这个函数现在由updateStatistics替代
+            console.log('统计数据已更新');
+        }
+
+        // 显示成功消息
+        function showSuccessMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #00f5ff, #0073ff);
+                color: #000;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                font-weight: 600;
+                z-index: 1001;
+                animation: slideIn 0.5s ease;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // 显示错误消息
+        function showErrorMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                font-weight: 600;
+                z-index: 1001;
+                animation: slideIn 0.5s ease;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // 删除文档
+        async function deleteKBDocument(docId, title) {
+            if (!confirm(`确定要删除文档 "${title}" 吗？`)) return;
+
+            try {
+                const response = await fetch('/api/document', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ doc_id: docId })
+                });
+
+                if (response.ok) {
+                    showSuccessMessage('文档删除成功');
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('删除失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('删除失败: ' + error.message);
+            }
+        }
+
+        // 快捷操作函数
+        function newTask() {
+            document.getElementById('taskInput').value = '';
+            document.getElementById('taskInput').focus();
+
+            // 重置所有面板
+            resetPanels();
+            currentTaskData = null;
+            currentTaskName = '';
+        }
+
+        function openTemplates() {
+            const templates = [
+                '装配DN50球阀',
+                '装配DN80蝶阀',
+                '装配调节阀',
+                '装配安全阀',
+                '装配止回阀'
+            ];
+
+            const template = templates[Math.floor(Math.random() * templates.length)];
+            document.getElementById('taskInput').value = template;
+            showSuccessMessage(`已选择模板: ${template}`);
+        }
+
+        function viewHistory() {
+            showSuccessMessage('历史记录功能开发中，敬请期待...');
+        }
+
+        function openAIAssistant() {
+            if (window.aiAssistant) {
+                window.aiAssistant.toggle();
+            } else {
+                showErrorMessage('AI助手暂不可用');
+            }
+        }
+
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认显示任务分解标签页
+            showDecompositionTab();
+        });
+    </script>
+    <!-- AI助手触发按钮 -->
+    <button class="ai-assistant-fab" onclick="window.aiAssistant && window.aiAssistant.toggle()" title="AI助手">
+        🤖
+    </button>
 </body>
 </html>
