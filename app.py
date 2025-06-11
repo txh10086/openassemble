@@ -27,6 +27,8 @@ from typing import Optional
 
 # 添加聊天请求模型
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
+
 
 # 取得当前脚本（app.py）所在的绝对路径
 BASE_DIR = Path(__file__).resolve().parent
@@ -41,7 +43,24 @@ print(">>> __file__ 绝对路径:", Path(__file__).resolve())
 print(">>> 计算出的 static 目录:", (BASE_DIR / "static").resolve())
 print(">>> 计算出的 templates 目录:", (BASE_DIR / "templates").resolve())
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动事件
+    print("\n" + "=" * 50)
+    print("✓ 控制阀装配任务分解系统已启动")
+    print("✓ 双重执行问题已修复")
+    print("✓ 缓存系统已启用")
+    print("=" * 50 + "\n")
+
+    yield
+
+    # 关闭事件（如果需要的话）
+    print("系统正在关闭...")
+
+
+# 创建 FastAPI 应用时传入 lifespan
+app = FastAPI(lifespan=lifespan)
 # 挂载项目根下的 static 文件夹
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
@@ -80,15 +99,6 @@ try:
 except ImportError:
     EXCEL_SUPPORT = False
     print("✗ Excel导出功能不可用，请安装: pip install pandas xlsxwriter")
-
-# 启动事件
-@app.on_event("startup")
-async def startup_event():
-    print("\n" + "=" * 50)
-    print("✓ 控制阀装配任务分解系统已启动")
-    print("✓ 双重执行问题已修复")
-    print("✓ 缓存系统已启用")
-    print("=" * 50 + "\n")
 
 
 # CORS中间件

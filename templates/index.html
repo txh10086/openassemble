@@ -415,6 +415,303 @@
             font-size: 0.9rem;
         }
 
+         /* 知识库样式 */
+        .knowledge-base-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .knowledge-main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .knowledge-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .kb-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .kb-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .kb-tab.active {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+        }
+
+        .kb-tab-content {
+            display: none;
+        }
+
+        .kb-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .kb-btn {
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            border: none;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .kb-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .kb-btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .kb-btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .documents-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .document-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .document-item:hover {
+            border-color: rgba(0, 245, 255, 0.5);
+            transform: translateX(5px);
+            background: rgba(0, 115, 255, 0.1);
+        }
+
+        .document-item.selected {
+            background: rgba(0, 245, 255, 0.2);
+            border-color: rgba(0, 245, 255, 0.8);
+        }
+
+        .document-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .document-meta {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .domain-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #00f5ff, #0073ff);
+            color: #000;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .kb-query-result {
+            background: rgba(0, 115, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #00f5ff;
+            animation: slideIn 0.5s ease;
+            margin-top: 1rem;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .answer-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+
+        .confidence {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .confidence.high {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .confidence.medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .confidence.low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .citations {
+            margin-left: 10px;
+            font-size: 0.9em;
+            color: #00f5ff;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #00f5ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mini-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-top: 2px solid #00f5ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        .panel-loading {
+            display: flex;
+            align-items: center;
+            color: #00f5ff;
+            font-size: 0.9rem;
+        }
+
+        .placeholder-message {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             .sidebar {
@@ -522,200 +819,6 @@
             transform: none;
         }
 
-        /* 知识库样式 */
-        .knowledge-base-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-        }
-
-        .knowledge-main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .knowledge-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
-        }
-
-        .kb-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .kb-tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 10px 10px 0 0;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .kb-tab.active {
-            background: linear-gradient(135deg, #00f5ff, #0073ff);
-            color: #000;
-        }
-
-        .kb-tab-content {
-            display: none;
-        }
-
-        .kb-tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .kb-btn {
-            background: linear-gradient(135deg, #00f5ff, #0073ff);
-            border: none;
-            color: #000;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .kb-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
-        }
-
-        .kb-btn-danger {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .kb-btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        .kb-query-result {
-            background: rgba(0, 115, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 15px;
-            border-left: 4px solid #00f5ff;
-            animation: slideIn 0.5s ease;
-        }
-
-        .answer-text {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1rem;
-        }
-
-        .confidence {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-        }
-
-        .confidence.high {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .confidence.medium {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .confidence.low {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .citations {
-            margin-left: 10px;
-            font-size: 0.9em;
-            color: #00f5ff;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: rgba(0, 245, 255, 0.5);
-            box-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .analytics-panel,
-        .monitoring-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .knowledge-main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
         .download-btn::after {
             content: '';
             position: absolute;
@@ -783,6 +886,20 @@
                     <div class="quick-action-icon">📊</div>
                     <div class="quick-action-title">历史记录</div>
                     <div class="quick-action-desc">查看过往任务</div>
+                </div>
+            </div>
+
+             <div class="sidebar-section" id="knowledgeSection" style="display: none;">
+                <div class="sidebar-title">知识库</div>
+                <div class="quick-action" onclick="addNewDocument()">
+                    <div class="quick-action-icon">📝</div>
+                    <div class="quick-action-title">添加文档</div>
+                    <div class="quick-action-desc">上传新的知识文档</div>
+                </div>
+                <div class="quick-action" onclick="refreshKnowledgeBase()">
+                    <div class="quick-action-icon">🔄</div>
+                    <div class="quick-action-title">刷新数据</div>
+                    <div class="quick-action-desc">重新加载知识库</div>
                 </div>
             </div>
 
@@ -877,7 +994,7 @@
                         </div>
 
                         <!-- 下载按钮区域 -->
-                        <div style="margin-top: 2rem;" id="downloadSection" style="display: none;">
+                        <div style="margin-top: 2rem; display: none;" id="downloadSection">
                             <h4 style="color: #00f5ff; margin-bottom: 1rem;">📥 结果导出</h4>
                             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                                 <button class="download-btn" onclick="downloadJSON()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
@@ -897,6 +1014,12 @@
     </main>
 
     <script>
+        // 全局变量存储当前任务数据
+        let currentTaskData = null;
+        let currentTaskName = '';
+        let kbAllDocuments = [];
+        let kbSelectedDocIds = new Set();
+
         // 导航切换
         function switchTab(tab) {
             // 移除所有active状态
@@ -904,17 +1027,18 @@
                 item.classList.remove('active');
             });
 
-            // 隐藏所有内容区域
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.style.display = 'none';
-            });
-
             // 设置当前按钮为active
             event.target.classList.add('active');
 
-            // 显示对应的内容区域
-            const contentArea = document.querySelector('.content-area');
+            // 显示/隐藏侧边栏对应部分
+            const knowledgeSection = document.getElementById('knowledgeSection');
+            if (tab === 'knowledge') {
+                knowledgeSection.style.display = 'block';
+            } else {
+                knowledgeSection.style.display = 'none';
+            }
 
+            // 显示对应的内容区域
             switch(tab) {
                 case 'decomposition':
                     showDecompositionTab();
@@ -931,220 +1055,8 @@
             }
         }
 
-        // 显示知识库标签页
-        function showKnowledgeTab() {
-            const contentArea = document.querySelector('.content-area');
-            contentArea.innerHTML = `
-                <!-- 知识库模块 -->
-                <div class="knowledge-base-panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">RAG专家知识库系统</h2>
-                        <div class="ai-status">
-                            <div class="ai-indicator"></div>
-                            DeepSeek-V3驱动
-                        </div>
-                    </div>
-
-                    <!-- 统计信息 -->
-                    <div class="stats-panel" style="margin-bottom: 2rem;">
-                        <h3 style="color: #00f5ff; margin-bottom: 1rem;">📊 知识库统计</h3>
-                        <div class="stats-grid" id="kbStatsGrid">
-                            <div class="stat-item">
-                                <div class="stat-value" id="totalDocs">-</div>
-                                <div class="stat-label">文档总数</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value" id="totalDomains">-</div>
-                                <div class="stat-label">领域数量</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value" id="totalWords">-</div>
-                                <div class="stat-label">总词数</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value" id="totalTokens">-</div>
-                                <div class="stat-label">总Token数</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="knowledge-main-grid">
-                        <!-- 添加文档 -->
-                        <div class="knowledge-panel">
-                            <h3 style="color: #00f5ff; margin-bottom: 1rem;">📝 添加文档</h3>
-
-                            <div class="kb-tabs">
-                                <div class="kb-tab active" onclick="switchKBTab('text')">文本</div>
-                                <div class="kb-tab" onclick="switchKBTab('url')">URL</div>
-                                <div class="kb-tab" onclick="switchKBTab('file')">文件</div>
-                            </div>
-
-                            <!-- 文本输入 -->
-                            <div id="textKBTab" class="kb-tab-content active">
-                                <form id="kbTextForm" onsubmit="addTextDocument(event)">
-                                    <div class="form-group">
-                                        <label>文档标题</label>
-                                        <input type="text" name="title" required placeholder="请输入文档标题">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>专业领域</label>
-                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>文档内容</label>
-                                        <textarea name="text" required placeholder="请输入或粘贴文档内容..." rows="8"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>版本号</label>
-                                        <input type="text" name="version" value="1.0" placeholder="1.0">
-                                    </div>
-                                    <button type="submit" class="kb-btn">
-                                        <span>💾</span>
-                                        添加文本文档
-                                    </button>
-                                </form>
-                            </div>
-
-                            <!-- URL输入 -->
-                            <div id="urlKBTab" class="kb-tab-content">
-                                <form id="kbUrlForm" onsubmit="addUrlDocument(event)">
-                                    <div class="form-group">
-                                        <label>PDF URL</label>
-                                        <input type="url" name="url" required placeholder="https://example.com/document.pdf">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>文档标题</label>
-                                        <input type="text" name="title" required placeholder="请输入文档标题">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>专业领域</label>
-                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>最大页数（可选）</label>
-                                        <input type="number" name="max_pages" min="1" placeholder="留空表示处理全部页面">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>版本号</label>
-                                        <input type="text" name="version" value="1.0" placeholder="1.0">
-                                    </div>
-                                    <button type="submit" class="kb-btn">
-                                        <span>🌐</span>
-                                        从URL添加
-                                    </button>
-                                </form>
-                            </div>
-
-                            <!-- 文件上传 -->
-                            <div id="fileKBTab" class="kb-tab-content">
-                                <form id="kbFileForm" onsubmit="addFileDocument(event)">
-                                    <div class="form-group">
-                                        <label>选择PDF文件</label>
-                                        <input type="file" name="file" accept=".pdf" required style="color: white;">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>文档标题</label>
-                                        <input type="text" name="title" required placeholder="请输入文档标题">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>专业领域</label>
-                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>最大页数（可选）</label>
-                                        <input type="number" name="max_pages" min="1" placeholder="留空表示全部页面">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>版本号</label>
-                                        <input type="text" name="version" value="1.0" placeholder="1.0">
-                                    </div>
-                                    <button type="submit" class="kb-btn">
-                                        <span>📁</span>
-                                        上传文件
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- 智能问答 -->
-                        <div class="knowledge-panel">
-                            <h3 style="color: #00f5ff; margin-bottom: 1rem;">❓ 智能问答</h3>
-
-                            <form id="kbQueryForm" onsubmit="queryKnowledge(event)">
-                                <div class="form-group">
-                                    <label>查询范围</label>
-                                    <select id="kbQueryScope" onchange="updateKBQueryScope()">
-                                        <option value="all">全部文档</option>
-                                        <option value="domain">指定领域</option>
-                                        <option value="docs">指定文档</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group" id="kbDomainSelect" style="display: none;">
-                                    <label>选择领域</label>
-                                    <select id="kbDomainFilter">
-                                        <option value="">请选择领域</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group" id="kbDocsSelect" style="display: none;">
-                                    <label>选择文档（可多选）</label>
-                                    <div class="documents-list" id="kbDocsList" style="max-height: 200px; overflow-y: auto;">
-                                        <!-- 动态加载文档列表 -->
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>搜索深度</label>
-                                    <input type="range" id="kbMaxDepth" min="1" max="5" value="2" oninput="updateKBDepthLabel(this.value)">
-                                    <span id="kbDepthLabel">深度: 2</span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>输入你的问题</label>
-                                    <textarea name="question" required placeholder="请输入你想了解的问题..." rows="4"></textarea>
-                                </div>
-
-                                <button type="submit" class="kb-btn">
-                                    <span>🔍</span>
-                                    开始查询
-                                </button>
-                            </form>
-
-                            <div class="loading" id="kbQueryLoading" style="display: none;">
-                                <div class="mini-spinner"></div>
-                                <p>正在搜索答案，请稍候...</p>
-                            </div>
-
-                            <div id="kbQueryResult" style="display: none; margin-top: 1rem;">
-                                <!-- 查询结果将显示在这里 -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 文档管理 -->
-                    <div class="knowledge-panel" style="margin-top: 2rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3 style="color: #00f5ff; margin: 0;">📚 文档管理</h3>
-                            <div style="display: flex; gap: 1rem;">
-                                <input type="text" id="kbSearchDocs" placeholder="搜索文档..." style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; background: rgba(255,255,255,0.1); color: white;" oninput="filterKBDocuments()">
-                                <button onclick="loadKBDocuments()" class="kb-btn" style="padding: 0.5rem 1rem;">
-                                    <span>🔄</span>
-                                    刷新
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="documents-list" id="kbDocumentsList" style="max-height: 400px; overflow-y: auto;">
-                            <!-- 文档列表将显示在这里 -->
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            // 初始化知识库
-            initKnowledgeBase();
-        }
+        // 显示任务分解标签页
+        function showDecompositionTab() {
             const contentArea = document.querySelector('.content-area');
             contentArea.innerHTML = `
                 <!-- 任务分解模块 -->
@@ -1245,9 +1157,265 @@
             `;
         }
 
-        // 全局变量存储当前任务数据
-        let currentTaskData = null;
-        let currentTaskName = '';
+        // 显示知识库标签页
+        function showKnowledgeTab() {
+            const contentArea = document.getElementById('mainContent');
+            contentArea.innerHTML = `
+                <!-- 知识库模块 -->
+                <div class="knowledge-base-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">RAG专家知识库系统</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            DeepSeek-V3驱动
+                        </div>
+                    </div>
+
+                    <!-- 统计信息 -->
+                    <div class="stats-panel" style="margin-bottom: 2rem;">
+                        <h3 style="color: #00f5ff; margin-bottom: 1rem;">📊 知识库统计</h3>
+                        <div class="stats-grid" id="kbStatsGrid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalDocs">-</div>
+                                <div class="stat-label">文档总数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalDomains">-</div>
+                                <div class="stat-label">领域数量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalWords">-</div>
+                                <div class="stat-label">总词数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalTokens">-</div>
+                                <div class="stat-label">总Token数</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="knowledge-main-grid">
+                        <!-- 添加文档 -->
+                        <div class="knowledge-panel">
+                            <h3 style="color: #00f5ff; margin-bottom: 1rem;">📝 添加文档</h3>
+
+                            <div class="kb-tabs">
+                                <div class="kb-tab active" onclick="switchKBTab('text', event)">文本</div>
+                                <div class="kb-tab" onclick="switchKBTab('url', event)">URL</div>
+                                <div class="kb-tab" onclick="switchKBTab('file', event)">文件</div>
+                            </div>
+
+                            <!-- 文本输入 -->
+                            <div id="textKBTab" class="kb-tab-content active">
+                                <form id="kbTextForm" onsubmit="addTextDocument(event)">
+                                    <div class="form-group">
+                                        <label>文档标题</label>
+                                        <input type="text" name="title" required placeholder="请输入文档标题">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>专业领域</label>
+                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>文档内容</label>
+                                        <textarea name="text" required placeholder="请输入或粘贴文档内容..." rows="8"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>版本号</label>
+                                        <input type="text" name="version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <button type="submit" class="kb-btn">
+                                        <span>💾</span>
+                                        添加文本文档
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- URL输入 -->
+                            <div id="urlKBTab" class="kb-tab-content">
+                                <form id="kbUrlForm" onsubmit="addUrlDocument(event)">
+                                    <div class="form-group">
+                                        <label>PDF URL</label>
+                                        <input type="url" name="url" required placeholder="https://example.com/document.pdf">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>文档标题</label>
+                                        <input type="text" name="title" required placeholder="请输入文档标题">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>专业领域</label>
+                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>最大页数（可选）</label>
+                                        <input type="number" name="max_pages" min="1" placeholder="留空表示处理全部页面">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>版本号</label>
+                                        <input type="text" name="version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <button type="submit" class="kb-btn">
+                                        <span>🌐</span>
+                                        从URL添加
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- 文件上传 -->
+                            <div id="fileKBTab" class="kb-tab-content">
+                                <form id="kbFileForm" onsubmit="addFileDocument(event)">
+                                    <div class="form-group">
+                                        <label>选择PDF文件</label>
+                                        <input type="file" name="file" accept=".pdf" required style="color: white;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>文档标题</label>
+                                        <input type="text" name="title" required placeholder="请输入文档标题">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>专业领域</label>
+                                        <input type="text" name="domain" required placeholder="如：阀门制造、工艺流程等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>最大页数（可选）</label>
+                                        <input type="number" name="max_pages" min="1" placeholder="留空表示全部页面">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>版本号</label>
+                                        <input type="text" name="version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <button type="submit" class="kb-btn">
+                                        <span>📁</span>
+                                        上传文件
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="loading" id="kbAddLoading">
+                                <div class="spinner"></div>
+                                <p>正在处理文档，请稍候...</p>
+                            </div>
+                        </div>
+
+                        <!-- 智能问答 -->
+                        <div class="knowledge-panel">
+                            <h3 style="color: #00f5ff; margin-bottom: 1rem;">❓ 智能问答</h3>
+
+                            <form id="kbQueryForm" onsubmit="queryKnowledge(event)">
+                                <div class="form-group">
+                                    <label>查询范围</label>
+                                    <select id="kbQueryScope" onchange="updateKBQueryScope()">
+                                        <option value="all">全部文档</option>
+                                        <option value="domain">指定领域</option>
+                                        <option value="docs">指定文档</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="kbDomainSelect" style="display: none;">
+                                    <label>选择领域</label>
+                                    <select id="kbDomainFilter">
+                                        <option value="">请选择领域</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="kbDocsSelect" style="display: none;">
+                                    <label>选择文档（可多选）</label>
+                                    <div class="documents-list" id="kbDocsList" style="max-height: 200px; overflow-y: auto;">
+                                        <!-- 动态加载文档列表 -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>搜索深度</label>
+                                    <input type="range" id="kbMaxDepth" min="1" max="5" value="2" oninput="updateKBDepthLabel(this.value)">
+                                    <span id="kbDepthLabel" style="color: #00f5ff;">深度: 2</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>输入你的问题</label>
+                                    <textarea name="question" required placeholder="请输入你想了解的问题..." rows="4"></textarea>
+                                </div>
+
+                                <button type="submit" class="kb-btn">
+                                    <span>🔍</span>
+                                    开始查询
+                                </button>
+                            </form>
+
+                            <div class="loading" id="kbQueryLoading">
+                                <div class="spinner"></div>
+                                <p>正在搜索答案，请稍候...</p>
+                            </div>
+
+                            <div id="kbQueryResult" style="display: none;">
+                                <!-- 查询结果将显示在这里 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 文档管理 -->
+                    <div class="knowledge-panel" style="margin-top: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="color: #00f5ff; margin: 0;">📚 文档管理</h3>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="text" id="kbSearchDocs" placeholder="搜索文档..." style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; background: rgba(255,255,255,0.1); color: white;" oninput="filterKBDocuments()">
+                                <button onclick="loadKBDocuments()" class="kb-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                                    <span>🔄</span>
+                                    刷新
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="documents-list" id="kbDocumentsList">
+                            <!-- 文档列表将显示在这里 -->
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 初始化知识库
+            initKnowledgeBase();
+        }
+
+        // 显示数据分析标签页
+        function showAnalyticsTab() {
+            const contentArea = document.getElementById('mainContent');
+            contentArea.innerHTML = `
+                <div class="task-decomposition-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">数据分析中心</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            分析引擎运行中
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <h3>🚧 功能开发中</h3>
+                        <p>数据分析功能正在开发中，敬请期待...</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 显示系统监控标签页
+        function showMonitoringTab() {
+            const contentArea = document.getElementById('mainContent');
+            contentArea.innerHTML = `
+                <div class="task-decomposition-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">系统监控中心</h2>
+                        <div class="ai-status">
+                            <div class="ai-indicator"></div>
+                            监控系统运行中
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <h3>🚧 功能开发中</h3>
+                        <p>系统监控功能正在开发中，敬请期待...</p>
+                    </div>
+                </div>
+            `;
+        }
 
         // 任务分析 - 整合原有API
         function analyzeTask() {
@@ -1286,485 +1454,67 @@
 
         // 显示面板加载状态
         function showPanelLoading() {
-            document.getElementById('processLoading').style.display = 'flex';
-            document.getElementById('statsLoading').style.display = 'flex';
-            document.getElementById('optimizationLoading').style.display = 'flex';
+            const processLoading = document.getElementById('processLoading');
+            const statsLoading = document.getElementById('statsLoading');
+            const optimizationLoading = document.getElementById('optimizationLoading');
+
+            if (processLoading) processLoading.style.display = 'flex';
+            if (statsLoading) statsLoading.style.display = 'flex';
+            if (optimizationLoading) optimizationLoading.style.display = 'flex';
 
             // 清空内容显示加载状态
-            document.getElementById('processSteps').innerHTML = `
-                <div class="loading-placeholder">
-                    <div class="mini-spinner"></div>
-                    <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1rem;">正在分析工艺流程...</p>
-                </div>
-            `;
+            const processSteps = document.getElementById('processSteps');
+            if (processSteps) {
+                processSteps.innerHTML = `
+                    <div class="loading-placeholder">
+                        <div class="mini-spinner"></div>
+                        <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1rem;">正在分析工艺流程...</p>
+                    </div>
+                `;
+            }
         }
 
         // 隐藏面板加载状态
         function hidePanelLoading() {
-            document.getElementById('processLoading').style.display = 'none';
-            document.getElementById('statsLoading').style.display = 'none';
+            const processLoading = document.getElementById('processLoading');
+            const statsLoading = document.getElementById('statsLoading');
+
+            if (processLoading) processLoading.style.display = 'none';
+            if (statsLoading) statsLoading.style.display = 'none';
 
             // 延迟隐藏优化建议的loading，模拟AI思考过程
             setTimeout(() => {
-                document.getElementById('optimizationLoading').style.display = 'none';
+                const optimizationLoading = document.getElementById('optimizationLoading');
+                if (optimizationLoading) optimizationLoading.style.display = 'none';
             }, 1500);
         }
 
         // 重置面板内容
         function resetPanels() {
-            document.getElementById('processSteps').innerHTML = `
-                <div class="placeholder-message">
-                    <span style="color: rgba(255, 255, 255, 0.6);">分析失败，请重试</span>
-                </div>
-            `;
-
-            document.getElementById('processCount').textContent = '-';
-            document.getElementById('stepCount').textContent = '-';
-            document.getElementById('estimatedTime').textContent = '-';
-            document.getElementById('efficiencyScore').textContent = '-';
-
-        // 显示数据分析标签页
-        function showAnalyticsTab() {
-            const contentArea = document.querySelector('.content-area');
-            contentArea.innerHTML = `
-                <div class="analytics-panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">数据分析中心</h2>
-                        <div class="ai-status">
-                            <div class="ai-indicator"></div>
-                            分析引擎运行中
-                        </div>
+            const processSteps = document.getElementById('processSteps');
+            if (processSteps) {
+                processSteps.innerHTML = `
+                    <div class="placeholder-message">
+                        <span style="color: rgba(255, 255, 255, 0.6);">分析失败，请重试</span>
                     </div>
-                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
-                        <h3>🚧 功能开发中</h3>
-                        <p>数据分析功能正在开发中，敬请期待...</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 显示系统监控标签页
-        function showMonitoringTab() {
-            const contentArea = document.querySelector('.content-area');
-            contentArea.innerHTML = `
-                <div class="monitoring-panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">系统监控中心</h2>
-                        <div class="ai-status">
-                            <div class="ai-indicator"></div>
-                            监控系统运行中
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
-                        <h3>🚧 功能开发中</h3>
-                        <p>系统监控功能正在开发中，敬请期待...</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 知识库相关变量
-        let kbAllDocuments = [];
-        let kbSelectedDocIds = new Set();
-
-        // 初始化知识库
-        async function initKnowledgeBase() {
-            await loadKBStats();
-            await loadKBDocuments();
-            await loadKBDomains();
-        }
-
-        // 加载知识库统计信息
-        async function loadKBStats() {
-            try {
-                const response = await fetch('/api/stats');
-                const stats = await response.json();
-
-                document.getElementById('totalDocs').textContent = stats.total_docs || 0;
-                document.getElementById('totalDomains').textContent = stats.total_domains || 0;
-                document.getElementById('totalWords').textContent = stats.total_words ? stats.total_words.toLocaleString() : 0;
-                document.getElementById('totalTokens').textContent = stats.total_tokens ? stats.total_tokens.toLocaleString() : 0;
-            } catch (error) {
-                console.error('加载统计信息失败:', error);
-            }
-        }
-
-        // 加载知识库文档列表
-        async function loadKBDocuments() {
-            try {
-                const response = await fetch('/api/documents');
-                const data = await response.json();
-                kbAllDocuments = data;
-                renderKBDocuments();
-                renderKBDocumentsList();
-            } catch (error) {
-                console.error('加载文档失败:', error);
-                showErrorMessage('加载文档失败: ' + error.message);
-            }
-        }
-
-        // 加载知识库领域列表
-        async function loadKBDomains() {
-            try {
-                const response = await fetch('/api/domains');
-                const domains = await response.json();
-                const select = document.getElementById('kbDomainFilter');
-                if (select) {
-                    select.innerHTML = '<option value="">请选择领域</option>';
-                    domains.forEach(domain => {
-                        select.innerHTML += `<option value="${domain}">${domain}</option>`;
-                    });
-                }
-            } catch (error) {
-                console.error('加载领域失败:', error);
-            }
-        }
-
-        // 知识库标签页切换
-        function switchKBTab(tabName) {
-            // 移除所有active类
-            document.querySelectorAll('.kb-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.kb-tab-content').forEach(content => content.classList.remove('active'));
-
-            // 添加active类到被点击的标签
-            event.target.classList.add('active');
-            document.getElementById(tabName + 'KBTab').classList.add('active');
-        }
-
-        // 更新查询范围
-        function updateKBQueryScope() {
-            const scope = document.getElementById('kbQueryScope').value;
-            document.getElementById('kbDomainSelect').style.display = scope === 'domain' ? 'block' : 'none';
-            document.getElementById('kbDocsSelect').style.display = scope === 'docs' ? 'block' : 'none';
-        }
-
-        // 更新深度标签
-        function updateKBDepthLabel(value) {
-            document.getElementById('kbDepthLabel').textContent = `深度: ${value}`;
-        }
-
-        // 添加文本文档
-        async function addTextDocument(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
-
-            try {
-                const response = await fetch('/api/document/text', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
-                    event.target.reset();
-                    await loadKBDocuments();
-                    await loadKBStats();
-                } else {
-                    const error = await response.json();
-                    showErrorMessage('添加失败: ' + error.detail);
-                }
-            } catch (error) {
-                showErrorMessage('添加失败: ' + error.message);
-            }
-        }
-
-        // 添加URL文档
-        async function addUrlDocument(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
-
-            if (data.max_pages) {
-                data.max_pages = parseInt(data.max_pages);
-            } else {
-                delete data.max_pages;
-            }
-
-            try {
-                const response = await fetch('/api/document/url', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
-                    event.target.reset();
-                    await loadKBDocuments();
-                    await loadKBStats();
-                } else {
-                    const error = await response.json();
-                    showErrorMessage('添加失败: ' + error.detail);
-                }
-            } catch (error) {
-                showErrorMessage('添加失败: ' + error.message);
-            }
-        }
-
-        // 添加文件文档
-        async function addFileDocument(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-
-            if (!formData.get('max_pages')) {
-                formData.delete('max_pages');
-            }
-
-            try {
-                const response = await fetch('/api/document/file', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
-                    event.target.reset();
-                    await loadKBDocuments();
-                    await loadKBStats();
-                } else {
-                    const error = await response.json();
-                    showErrorMessage('添加失败: ' + JSON.stringify(error));
-                }
-            } catch (error) {
-                showErrorMessage('添加失败: ' + error.message);
-            }
-        }
-
-        // 查询知识库
-        async function queryKnowledge(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const scope = document.getElementById('kbQueryScope').value;
-
-            const queryData = {
-                question: formData.get('question'),
-                max_depth: parseInt(document.getElementById('kbMaxDepth').value)
-            };
-
-            if (scope === 'domain' && document.getElementById('kbDomainFilter').value) {
-                queryData.domain = document.getElementById('kbDomainFilter').value;
-            } else if (scope === 'docs' && kbSelectedDocIds.size > 0) {
-                queryData.doc_ids = Array.from(kbSelectedDocIds);
-            }
-
-            document.getElementById('kbQueryLoading').style.display = 'block';
-            document.getElementById('kbQueryResult').style.display = 'none';
-
-            try {
-                const response = await fetch('/api/query', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(queryData)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    displayKBQueryResult(result);
-                } else {
-                    const error = await response.json();
-                    showErrorMessage('查询失败: ' + error.detail);
-                }
-            } catch (error) {
-                showErrorMessage('查询失败: ' + error.message);
-            } finally {
-                document.getElementById('kbQueryLoading').style.display = 'none';
-            }
-        }
-
-        // 显示查询结果
-        function displayKBQueryResult(result) {
-            const resultDiv = document.getElementById('kbQueryResult');
-
-            let html = '<div class="kb-query-result">';
-            html += `<div class="answer-text">${result.answer.replace(/\n/g, '<br>')}</div>`;
-            html += '<div style="display: flex; align-items: center; gap: 10px; margin-top: 1rem;">';
-            html += `<span class="confidence ${result.confidence}">${result.confidence.toUpperCase()} 置信度</span>`;
-
-            if (result.citations && result.citations.length > 0) {
-                html += `<div class="citations">引用: ${result.citations.join(', ')}</div>`;
-            }
-            html += '</div>';
-
-            if (result.paragraphs && result.paragraphs.length > 0) {
-                html += '<details style="margin-top: 20px;">';
-                html += '<summary style="cursor: pointer; font-weight: 600; color: #00f5ff;">查看引用段落</summary>';
-                html += '<div style="margin-top: 10px;">';
-                result.paragraphs.slice(0, 3).forEach((para, idx) => {
-                    html += `
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; margin-top: 10px; border-radius: 10px; border-left: 3px solid #00f5ff;">
-                            <div style="font-size: 0.9em; color: #00f5ff; margin-bottom: 5px;">
-                                段落 ${para.display_id || para.id} - 来源: ${para.doc_title || '未知文档'}
-                            </div>
-                            <div style="color: rgba(255,255,255,0.9);">
-                                ${para.text.substring(0, 300)}${para.text.length > 300 ? '...' : ''}
-                            </div>
-                        </div>
-                    `;
-                });
-                html += '</div></details>';
-            }
-
-            html += '</div>';
-
-            resultDiv.innerHTML = html;
-            resultDiv.style.display = 'block';
-        }
-
-        // 渲染文档列表（用于查询）
-        function renderKBDocuments() {
-            const docsList = document.getElementById('kbDocsList');
-            if (!docsList) return;
-
-            docsList.innerHTML = kbAllDocuments.map(doc => `
-                <div class="document-item ${kbSelectedDocIds.has(doc.doc_id) ? 'selected' : ''}"
-                     onclick="toggleKBDocSelection('${doc.doc_id}')">
-                    <div class="document-title">${doc.title}</div>
-                    <div class="document-meta">
-                        <span class="domain-tag">${doc.domain}</span>
-                        <span class="meta-item">版本: ${doc.version}</span>
-                        <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // 渲染文档列表（用于管理）
-        function renderKBDocumentsList() {
-            const documentsList = document.getElementById('kbDocumentsList');
-            if (!documentsList) return;
-
-            documentsList.innerHTML = kbAllDocuments.map(doc => `
-                <div class="document-item" style="margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                        <div style="flex: 1;">
-                            <div class="document-title">${doc.title}</div>
-                            <div class="document-meta">
-                                <span class="domain-tag">${doc.domain}</span>
-                                <span class="meta-item">ID: ${doc.doc_id}</span>
-                                <span class="meta-item">版本: ${doc.version}</span>
-                                <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
-                                <span class="meta-item">创建于: ${new Date(doc.created_at).toLocaleDateString()}</span>
-                            </div>
-                        </div>
-                        <button class="kb-btn-danger" onclick="deleteKBDocument('${doc.doc_id}', '${doc.title}')" style="background: #dc3545; padding: 0.5rem 1rem;">
-                            🗑️ 删除
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // 切换文档选择
-        function toggleKBDocSelection(docId) {
-            if (kbSelectedDocIds.has(docId)) {
-                kbSelectedDocIds.delete(docId);
-            } else {
-                kbSelectedDocIds.add(docId);
-            }
-            renderKBDocuments();
-        }
-
-        // 过滤文档
-        function filterKBDocuments() {
-            const searchTerm = document.getElementById('kbSearchDocs').value.toLowerCase();
-            const filtered = kbAllDocuments.filter(doc =>
-                doc.title.toLowerCase().includes(searchTerm) ||
-                doc.domain.toLowerCase().includes(searchTerm)
-            );
-
-            const documentsList = document.getElementById('kbDocumentsList');
-            if (!documentsList) return;
-
-            documentsList.innerHTML = filtered.map(doc => `
-                <div class="document-item" style="margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                        <div style="flex: 1;">
-                            <div class="document-title">${doc.title}</div>
-                            <div class="document-meta">
-                                <span class="domain-tag">${doc.domain}</span>
-                                <span class="meta-item">ID: ${doc.doc_id}</span>
-                                <span class="meta-item">版本: ${doc.version}</span>
-                                <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
-                                <span class="meta-item">创建于: ${new Date(doc.created_at).toLocaleDateString()}</span>
-                            </div>
-                        </div>
-                        <button class="kb-btn-danger" onclick="deleteKBDocument('${doc.doc_id}', '${doc.title}')" style="background: #dc3545; padding: 0.5rem 1rem;">
-                            🗑️ 删除
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // 生成优化建议
-        function generateOptimization(data) {
-            const optimizationContent = document.getElementById('optimizationContent');
-            if (!optimizationContent) return;
-
-            // 模拟AI分析过程
-            setTimeout(() => {
-                const suggestions = [
-                    "建议在关键工序间增加质量检测环节，可提升产品合格率约8%",
-                    "优化工序顺序可减少约15%的生产时间",
-                    "并行执行某些独立工序可提高整体效率",
-                    "建议增加预防性维护检查点，降低设备故障风险",
-                    "优化物料供应时序，减少等待时间"
-                ];
-
-                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-
-                optimizationContent.innerHTML = `
-                    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin: 0;">
-                        💡 ${randomSuggestion}
-                    </p>
                 `;
-            }, 1500);
-        }
+            }
 
-        // 显示下载区域
-        function showDownloadSection() {
+            const elements = ['processCount', 'stepCount', 'estimatedTime', 'efficiencyScore'];
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = '-';
+            });
+
             const downloadSection = document.getElementById('downloadSection');
-            if (downloadSection) {
-                downloadSection.style.display = 'block';
-            }
-        }
-            if (!confirm(`确定要删除文档 "${title}" 吗？`)) return;
-
-            try {
-                const response = await fetch('/api/document', {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ doc_id: docId })
-                });
-
-                if (response.ok) {
-                    showSuccessMessage('文档删除成功');
-                    await loadKBDocuments();
-                    await loadKBStats();
-                } else {
-                    const error = await response.json();
-                    showErrorMessage('删除失败: ' + error.detail);
-                }
-            } catch (error) {
-                showErrorMessage('删除失败: ' + error.message);
-            }
-        }
-                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0; font-style: italic;">
-                    等待分析完成后生成优化建议...
-                </p>
-            `;
-
-            document.getElementById('downloadSection').style.display = 'none';
+            if (downloadSection) downloadSection.style.display = 'none';
         }
 
         // 显示工艺流程结果
         function displayProcessResults(data) {
             const processStepsContainer = document.getElementById('processSteps');
+            if (!processStepsContainer) return;
+
             if (!data || !data.processes) {
                 processStepsContainer.innerHTML = '<p style="color: rgba(255,255,255,0.7);">暂无工艺流程数据</p>';
                 return;
@@ -1818,6 +1568,8 @@
         // 数字动画效果
         function animateNumber(elementId, targetValue) {
             const element = document.getElementById(elementId);
+            if (!element) return;
+
             const startValue = 0;
             const duration = 1000;
             const startTime = performance.now();
@@ -1840,6 +1592,7 @@
         // 生成优化建议
         function generateOptimization(data) {
             const optimizationContent = document.getElementById('optimizationContent');
+            if (!optimizationContent) return;
 
             // 模拟AI分析过程
             setTimeout(() => {
@@ -1863,7 +1616,10 @@
 
         // 显示下载区域
         function showDownloadSection() {
-            document.getElementById('downloadSection').style.display = 'block';
+            const downloadSection = document.getElementById('downloadSection');
+            if (downloadSection) {
+                downloadSection.style.display = 'block';
+            }
         }
 
         // 下载JSON文件
@@ -1916,86 +1672,28 @@
             fetch(exportUrl)
                 .then(response => {
                     if (response.ok) {
-                        // 获取文件名
-                        const contentDisposition = response.headers.get('Content-Disposition');
-                        let filename = 'export.xlsx';
-                        if (contentDisposition) {
-                            const matches = /filename\*=UTF-8''(.+)/.exec(contentDisposition);
-                            if (matches) {
-                                filename = decodeURIComponent(matches[1]);
-                            }
-                        }
-
-                        // 创建下载链接
                         return response.blob().then(blob => {
                             const url = window.URL.createObjectURL(blob);
                             const link = document.createElement('a');
                             link.href = url;
-                            link.setAttribute('download', filename);
-
+                            link.setAttribute('download', 'export.xlsx');
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
                             window.URL.revokeObjectURL(url);
-
                             showSuccessMessage('Excel文件下载成功！');
                         });
                     } else {
-                        // 如果Excel失败，尝试CSV
-                        return response.json().then(error => {
-                            console.log('Excel下载失败，尝试CSV:', error);
-                            return downloadCSVFallback();
-                        });
+                        throw new Error('下载失败');
                     }
                 })
                 .catch(error => {
                     console.error('Excel下载失败:', error);
-                    // 尝试CSV备用方案
-                    downloadCSVFallback();
+                    showErrorMessage('文件下载失败，请重试');
                 })
                 .finally(() => {
                     downloadBtn.innerHTML = originalText;
                     downloadBtn.disabled = false;
-                });
-        }
-
-        // CSV备用下载方案
-        function downloadCSVFallback() {
-            console.log('使用CSV备用方案');
-            const csvUrl = `/api/export/csv?task=${encodeURIComponent(currentTaskName)}`;
-
-            return fetch(csvUrl)
-                .then(response => {
-                    if (response.ok) {
-                        const contentDisposition = response.headers.get('Content-Disposition');
-                        let filename = 'export.csv';
-                        if (contentDisposition) {
-                            const matches = /filename\*=UTF-8''(.+)/.exec(contentDisposition);
-                            if (matches) {
-                                filename = decodeURIComponent(matches[1]);
-                            }
-                        }
-
-                        return response.blob().then(blob => {
-                            const url = window.URL.createObjectURL(blob);
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.setAttribute('download', filename);
-
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                            window.URL.revokeObjectURL(url);
-
-                            showSuccessMessage('CSV文件下载成功！(Excel功能暂不可用)');
-                        });
-                    } else {
-                        throw new Error('CSV下载也失败了');
-                    }
-                })
-                .catch(error => {
-                    console.error('CSV下载也失败:', error);
-                    showErrorMessage('文件下载失败，请重试');
                 });
         }
 
@@ -2040,59 +1738,351 @@
             document.body.insertAdjacentHTML('beforeend', stepsHtml);
         }
 
-        // 更新结果
-        function updateResults() {
-            // 这个函数现在由updateStatistics替代
-            console.log('统计数据已更新');
+        // 知识库相关功能
+        async function initKnowledgeBase() {
+            await loadKBStats();
+            await loadKBDocuments();
+            await loadKBDomains();
         }
 
-        // 显示成功消息
-        function showSuccessMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: linear-gradient(135deg, #00f5ff, #0073ff);
-                color: #000;
-                padding: 1rem 2rem;
-                border-radius: 10px;
-                font-weight: 600;
-                z-index: 1001;
-                animation: slideIn 0.5s ease;
-            `;
-            messageDiv.textContent = message;
-            document.body.appendChild(messageDiv);
+        async function loadKBStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
 
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 3000);
+                const totalDocsEl = document.getElementById('totalDocs');
+                const totalDomainsEl = document.getElementById('totalDomains');
+                const totalWordsEl = document.getElementById('totalWords');
+                const totalTokensEl = document.getElementById('totalTokens');
+
+                if (totalDocsEl) totalDocsEl.textContent = stats.total_docs || 0;
+                if (totalDomainsEl) totalDomainsEl.textContent = stats.total_domains || 0;
+                if (totalWordsEl) totalWordsEl.textContent = stats.total_words ? stats.total_words.toLocaleString() : 0;
+                if (totalTokensEl) totalTokensEl.textContent = stats.total_tokens ? stats.total_tokens.toLocaleString() : 0;
+            } catch (error) {
+                console.error('加载统计信息失败:', error);
+            }
         }
 
-        // 显示错误消息
-        function showErrorMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 10px;
-                font-weight: 600;
-                z-index: 1001;
-                animation: slideIn 0.5s ease;
-            `;
-            messageDiv.textContent = message;
-            document.body.appendChild(messageDiv);
-
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 5000);
+        async function loadKBDocuments() {
+            try {
+                const response = await fetch('/api/documents');
+                const data = await response.json();
+                kbAllDocuments = data;
+                renderKBDocuments();
+                renderKBDocumentsList();
+            } catch (error) {
+                console.error('加载文档失败:', error);
+                showErrorMessage('加载文档失败: ' + error.message);
+            }
         }
 
-        // 删除文档
+        async function loadKBDomains() {
+            try {
+                const response = await fetch('/api/domains');
+                const domains = await response.json();
+                const select = document.getElementById('kbDomainFilter');
+                if (select) {
+                    select.innerHTML = '<option value="">请选择领域</option>';
+                    domains.forEach(domain => {
+                        select.innerHTML += `<option value="${domain}">${domain}</option>`;
+                    });
+                }
+            } catch (error) {
+                console.error('加载领域失败:', error);
+            }
+        }
+
+        function switchKBTab(tabName, event) {
+            document.querySelectorAll('.kb-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.kb-tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'KBTab').classList.add('active');
+        }
+
+        function updateKBQueryScope() {
+            const scope = document.getElementById('kbQueryScope').value;
+            const domainSelect = document.getElementById('kbDomainSelect');
+            const docsSelect = document.getElementById('kbDocsSelect');
+
+            if (domainSelect) domainSelect.style.display = scope === 'domain' ? 'block' : 'none';
+            if (docsSelect) docsSelect.style.display = scope === 'docs' ? 'block' : 'none';
+        }
+
+        function updateKBDepthLabel(value) {
+            const label = document.getElementById('kbDepthLabel');
+            if (label) label.textContent = `深度: ${value}`;
+        }
+
+        async function addTextDocument(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            const loadingEl = document.getElementById('kbAddLoading');
+            if (loadingEl) loadingEl.classList.add('active');
+
+            try {
+                const response = await fetch('/api/document/text', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
+                    event.target.reset();
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('添加失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('添加失败: ' + error.message);
+            } finally {
+                if (loadingEl) loadingEl.classList.remove('active');
+            }
+        }
+
+        async function addUrlDocument(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            if (data.max_pages) {
+                data.max_pages = parseInt(data.max_pages);
+            } else {
+                delete data.max_pages;
+            }
+
+            const loadingEl = document.getElementById('kbAddLoading');
+            if (loadingEl) loadingEl.classList.add('active');
+
+            try {
+                const response = await fetch('/api/document/url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
+                    event.target.reset();
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('添加失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('添加失败: ' + error.message);
+            } finally {
+                if (loadingEl) loadingEl.classList.remove('active');
+            }
+        }
+
+        async function addFileDocument(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            if (!formData.get('max_pages')) {
+                formData.delete('max_pages');
+            }
+
+            const loadingEl = document.getElementById('kbAddLoading');
+            if (loadingEl) loadingEl.classList.add('active');
+
+            try {
+                const response = await fetch('/api/document/file', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showSuccessMessage(`文档添加成功！ID: ${result.doc_id}`);
+                    event.target.reset();
+                    await loadKBDocuments();
+                    await loadKBStats();
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('添加失败: ' + JSON.stringify(error));
+                }
+            } catch (error) {
+                showErrorMessage('添加失败: ' + error.message);
+            } finally {
+                if (loadingEl) loadingEl.classList.remove('active');
+            }
+        }
+
+        async function queryKnowledge(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const scope = document.getElementById('kbQueryScope').value;
+
+            const queryData = {
+                question: formData.get('question'),
+                max_depth: parseInt(document.getElementById('kbMaxDepth').value)
+            };
+
+            if (scope === 'domain' && document.getElementById('kbDomainFilter').value) {
+                queryData.domain = document.getElementById('kbDomainFilter').value;
+            } else if (scope === 'docs' && kbSelectedDocIds.size > 0) {
+                queryData.doc_ids = Array.from(kbSelectedDocIds);
+            }
+
+            const loadingEl = document.getElementById('kbQueryLoading');
+            const resultEl = document.getElementById('kbQueryResult');
+
+            if (loadingEl) loadingEl.classList.add('active');
+            if (resultEl) resultEl.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(queryData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    displayKBQueryResult(result);
+                } else {
+                    const error = await response.json();
+                    showErrorMessage('查询失败: ' + error.detail);
+                }
+            } catch (error) {
+                showErrorMessage('查询失败: ' + error.message);
+            } finally {
+                if (loadingEl) loadingEl.classList.remove('active');
+            }
+        }
+
+        function displayKBQueryResult(result) {
+            const resultDiv = document.getElementById('kbQueryResult');
+            if (!resultDiv) return;
+
+            let html = '<div class="kb-query-result">';
+            html += `<div class="answer-text">${result.answer.replace(/\n/g, '<br>')}</div>`;
+            html += '<div style="display: flex; align-items: center; gap: 10px; margin-top: 1rem;">';
+            html += `<span class="confidence ${result.confidence}">${result.confidence.toUpperCase()} 置信度</span>`;
+
+            if (result.citations && result.citations.length > 0) {
+                html += `<div class="citations">引用: ${result.citations.join(', ')}</div>`;
+            }
+            html += '</div>';
+
+            if (result.paragraphs && result.paragraphs.length > 0) {
+                html += '<details style="margin-top: 20px;">';
+                html += '<summary style="cursor: pointer; font-weight: 600; color: #00f5ff;">查看引用段落</summary>';
+                html += '<div style="margin-top: 10px;">';
+                result.paragraphs.slice(0, 3).forEach((para, idx) => {
+                    html += `
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; margin-top: 10px; border-radius: 10px; border-left: 3px solid #00f5ff;">
+                            <div style="font-size: 0.9em; color: #00f5ff; margin-bottom: 5px;">
+                                段落 ${para.display_id || para.id} - 来源: ${para.doc_title || '未知文档'}
+                            </div>
+                            <div style="color: rgba(255,255,255,0.9);">
+                                ${para.text.substring(0, 300)}${para.text.length > 300 ? '...' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div></details>';
+            }
+
+            html += '</div>';
+
+            resultDiv.innerHTML = html;
+            resultDiv.style.display = 'block';
+        }
+
+        function renderKBDocuments() {
+            const docsList = document.getElementById('kbDocsList');
+            if (!docsList) return;
+
+            docsList.innerHTML = kbAllDocuments.map(doc => `
+                <div class="document-item ${kbSelectedDocIds.has(doc.doc_id) ? 'selected' : ''}"
+                     onclick="toggleKBDocSelection('${doc.doc_id}')">
+                    <div class="document-title">${doc.title}</div>
+                    <div class="document-meta">
+                        <span class="domain-tag">${doc.domain}</span>
+                        <span class="meta-item">版本: ${doc.version}</span>
+                        <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderKBDocumentsList() {
+            const documentsList = document.getElementById('kbDocumentsList');
+            if (!documentsList) return;
+
+            documentsList.innerHTML = kbAllDocuments.map(doc => `
+                <div class="document-item" style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div class="document-title">${doc.title}</div>
+                            <div class="document-meta">
+                                <span class="domain-tag">${doc.domain}</span>
+                                <span class="meta-item">ID: ${doc.doc_id}</span>
+                                <span class="meta-item">版本: ${doc.version}</span>
+                                <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
+                                <span class="meta-item">创建于: ${new Date(doc.created_at).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <button class="kb-btn-danger" onclick="deleteKBDocument('${doc.doc_id}', '${doc.title}')" style="padding: 0.5rem 1rem;">
+                            🗑️ 删除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleKBDocSelection(docId) {
+            if (kbSelectedDocIds.has(docId)) {
+                kbSelectedDocIds.delete(docId);
+            } else {
+                kbSelectedDocIds.add(docId);
+            }
+            renderKBDocuments();
+        }
+
+        function filterKBDocuments() {
+            const searchTerm = document.getElementById('kbSearchDocs').value.toLowerCase();
+            const filtered = kbAllDocuments.filter(doc =>
+                doc.title.toLowerCase().includes(searchTerm) ||
+                doc.domain.toLowerCase().includes(searchTerm)
+            );
+
+            const documentsList = document.getElementById('kbDocumentsList');
+            if (!documentsList) return;
+
+            documentsList.innerHTML = filtered.map(doc => `
+                <div class="document-item" style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div class="document-title">${doc.title}</div>
+                            <div class="document-meta">
+                                <span class="domain-tag">${doc.domain}</span>
+                                <span class="meta-item">ID: ${doc.doc_id}</span>
+                                <span class="meta-item">版本: ${doc.version}</span>
+                                <span class="meta-item">${doc.word_count.toLocaleString()} 词</span>
+                                <span class="meta-item">创建于: ${new Date(doc.created_at).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <button class="kb-btn-danger" onclick="deleteKBDocument('${doc.doc_id}', '${doc.title}')" style="padding: 0.5rem 1rem;">
+                            🗑️ 删除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         async function deleteKBDocument(docId, title) {
             if (!confirm(`确定要删除文档 "${title}" 吗？`)) return;
 
@@ -2118,8 +2108,11 @@
 
         // 快捷操作函数
         function newTask() {
-            document.getElementById('taskInput').value = '';
-            document.getElementById('taskInput').focus();
+            const taskInput = document.getElementById('taskInput');
+            if (taskInput) {
+                taskInput.value = '';
+                taskInput.focus();
+            }
 
             // 重置所有面板
             resetPanels();
@@ -2130,19 +2123,37 @@
         function openTemplates() {
             const templates = [
                 '装配DN50球阀',
-                '装配DN80蝶阀',
-                '装配调节阀',
-                '装配安全阀',
-                '装配止回阀'
+                '装配DN40球阀',
+                '装配DN32球阀',
+                '装配DN25球阀',
+                '装配DN15球阀'
             ];
 
             const template = templates[Math.floor(Math.random() * templates.length)];
-            document.getElementById('taskInput').value = template;
+            const taskInput = document.getElementById('taskInput');
+            if (taskInput) {
+                taskInput.value = template;
+            }
             showSuccessMessage(`已选择模板: ${template}`);
         }
 
         function viewHistory() {
             showSuccessMessage('历史记录功能开发中，敬请期待...');
+        }
+
+         function addNewDocument() {
+            switchTab('knowledge');
+            showSuccessMessage('已切换到知识库，请选择添加方式');
+        }
+
+        function refreshKnowledgeBase() {
+            if (document.querySelector('.knowledge-base-panel')) {
+                loadKBDocuments();
+                loadKBStats();
+                showSuccessMessage('知识库已刷新');
+            } else {
+                showSuccessMessage('请先切换到知识库标签页');
+            }
         }
 
         function openAIAssistant() {
@@ -2151,6 +2162,30 @@
             } else {
                 showErrorMessage('AI助手暂不可用');
             }
+        }
+
+        // 显示成功消息
+        function showSuccessMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'alert alert-success';
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // 显示错误消息
+        function showErrorMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'alert alert-error';
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
         }
 
         // 添加动画样式
@@ -2169,9 +2204,13 @@
             showDecompositionTab();
         });
     </script>
+
     <!-- AI助手触发按钮 -->
-    <button class="ai-assistant-fab" onclick="window.aiAssistant && window.aiAssistant.toggle()" title="AI助手">
+    <button class="ai-assistant-fab" onclick="window.aiAssistant && window.aiAssistant.toggle()" title="AI助手" style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 50%; color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; z-index: 999;">
         🤖
     </button>
+
+    <!-- 引入AI助手模块 -->
+    <script src="/static/js/modules/ai-assistant.js"></script>
 </body>
 </html>
