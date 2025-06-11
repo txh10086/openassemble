@@ -11,15 +11,60 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1E182F 0%, #004390 50%, #1E182F 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
+        :root {
+            /* 使用标准品牌色彩 */
+            --primary-blue: #00438e;
+            --primary-orange: #e94800;
+            --primary-gray: #595959;
+            --light-blue: #3d7bc6;
+            --light-orange: #ff6b2b;
+            --light-gray: #8a8a8a;
+            --dark-bg: #ffffff;
+            --darker-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --white: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --light-white: rgba(44, 62, 80, 0.9);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --glow-blue: rgba(0, 67, 142, 0.3);
+            --glow-orange: rgba(233, 72, 0, 0.3);
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.2);
         }
 
-        /* 动态背景 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 科技感背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, var(--glow-blue) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--glow-orange) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(61, 123, 198, 0.1) 0%, transparent 50%);
+            z-index: -2;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 增强的背景动画 */
         .background-animation {
             position: fixed;
             top: 0;
@@ -38,25 +83,46 @@
 
         .shape {
             position: absolute;
-            background: linear-gradient(45deg, #004390, #E94800);
+            background: linear-gradient(45deg, var(--primary-blue), var(--light-blue));
             border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
+            animation: float 25s infinite ease-in-out;
+            box-shadow: 0 0 30px var(--glow-blue);
+            filter: blur(1px);
+            opacity: 0.6;
         }
 
-        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
-        .shape:nth-child(2) { width: 120px; height: 120px; top: 60%; left: 80%; animation-delay: 5s; }
-        .shape:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 20%; animation-delay: 10s; }
+        .shape:nth-child(1) {
+            width: 80px; height: 80px; top: 20%; left: 10%;
+            animation-delay: 0s;
+            background: linear-gradient(45deg, var(--primary-orange), var(--light-orange));
+            box-shadow: 0 0 30px var(--glow-orange);
+        }
+        .shape:nth-child(2) {
+            width: 120px; height: 120px; top: 60%; left: 80%;
+            animation-delay: 8s;
+        }
+        .shape:nth-child(3) {
+            width: 60px; height: 60px; top: 80%; left: 20%;
+            animation-delay: 16s;
+            background: linear-gradient(45deg, var(--primary-gray), var(--light-gray));
+            box-shadow: 0 0 30px rgba(89, 89, 89, 0.4);
+        }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-100px) rotate(180deg); }
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-80px) rotate(180deg);
+                opacity: 0.7;
+            }
         }
 
-        /* 顶部导航 */
+        /* 立体化顶部导航 */
         .platform-header {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-bottom: 2px solid var(--primary-blue);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -64,6 +130,10 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow:
+                0 8px 32px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
         }
 
         .logo-section {
@@ -74,47 +144,82 @@
 
         .logo-section h1 {
             font-size: 1.5rem;
-            background: linear-gradient(135deg, #004390, #E94800);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
+            text-shadow: 0 0 20px var(--glow-blue);
         }
 
         .version {
-            background: rgba(233, 72, 0, 0.2);
-            color: #E94800;
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            color: var(--white);
+            padding: 0.3rem 0.7rem;
+            border-radius: 8px;
             font-size: 0.7rem;
             font-weight: 600;
+            box-shadow:
+                0 4px 15px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .main-nav {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         .nav-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff;
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
             padding: 0.7rem 1.5rem;
-            border-radius: 25px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 4px 15px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
         }
 
         .nav-item:hover {
-            background: rgba(233, 72, 0, 0.2);
-            border-color: rgba(233, 72, 0, 0.5);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            border-color: var(--primary-blue);
+            color: var(--white);
             transform: translateY(-2px);
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, #004390, #E94800);
-            color: #fff;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            border-color: var(--primary-orange);
+            color: var(--white);
             font-weight: 600;
+            box-shadow:
+                0 6px 20px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
         }
 
         .user-actions {
@@ -124,29 +229,40 @@
         }
 
         .notification-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, var(--primary-gray), var(--light-gray));
             border: none;
-            color: #ffffff;
+            color: var(--white);
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .notification-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
+            background: linear-gradient(145deg, var(--light-gray), var(--primary-gray));
+            transform: translateY(-2px) scale(1.05);
+            box-shadow:
+                0 6px 20px rgba(89, 89, 89, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .user-avatar {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            color: var(--white);
             padding: 0.7rem 1rem;
-            border-radius: 20px;
+            border-radius: 10px;
             font-weight: 600;
+            box-shadow:
+                0 4px 15px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* 主工作区 */
@@ -157,10 +273,12 @@
 
         .sidebar {
             width: 280px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-right: 1px solid var(--border-color);
             padding: 2rem;
+            box-shadow:
+                8px 0 32px var(--shadow-light),
+                inset -1px 0 0 rgba(255, 255, 255, 0.5);
         }
 
         .sidebar-section {
@@ -169,7 +287,10 @@
 
         .sidebar-title {
             font-size: 0.9rem;
-            color: #E94800;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1rem;
             text-transform: uppercase;
             font-weight: 600;
@@ -177,24 +298,50 @@
         }
 
         .quick-action {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1rem;
             margin-bottom: 0.8rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 4px 15px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .quick-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-orange));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .quick-action:hover::before {
+            transform: scaleX(1);
         }
 
         .quick-action:hover {
-            background: rgba(233, 72, 0, 0.1);
-            border-color: rgba(233, 72, 0, 0.3);
-            transform: translateX(5px);
+            background: linear-gradient(135deg, var(--primary-blue), rgba(61, 123, 198, 0.3));
+            border-color: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .quick-action-icon {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         .quick-action-title {
@@ -204,7 +351,7 @@
 
         .quick-action-desc {
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
         }
 
         /* 内容区域 */
@@ -214,14 +361,28 @@
             overflow-y: auto;
         }
 
-        /* 面板样式 */
+        /* 立体化面板样式 */
         .task-decomposition-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
+            box-shadow:
+                0 20px 60px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-decomposition-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
         }
 
         .panel-header {
@@ -229,39 +390,57 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
         }
 
         .panel-title {
             font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #ffffff, #E94800);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--glow-blue);
         }
 
         .ai-status {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(233, 72, 0, 0.1);
-            border: 1px solid rgba(233, 72, 0, 0.3);
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            color: var(--white);
             padding: 0.5rem 1rem;
-            border-radius: 20px;
+            border-radius: 10px;
             font-size: 0.8rem;
-            color: #E94800;
+            font-weight: 600;
+            box-shadow:
+                0 4px 15px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .ai-indicator {
             width: 8px;
             height: 8px;
-            background: #E94800;
+            background: var(--white);
             border-radius: 50%;
             animation: pulse 2s infinite;
+            box-shadow: 0 0 10px var(--white);
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--white);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.2);
+                box-shadow: 0 0 20px var(--white);
+            }
         }
 
         /* 输入区域 */
@@ -273,43 +452,71 @@
 
         .task-input {
             flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 1rem 1.5rem;
-            color: #ffffff;
+            color: var(--text-primary);
             font-size: 1rem;
             transition: all 0.3s ease;
+            box-shadow:
+                inset 0 2px 8px var(--shadow-light),
+                0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .task-input:focus {
             outline: none;
-            border-color: rgba(233, 72, 0, 0.5);
-            box-shadow: 0 0 20px rgba(233, 72, 0, 0.2);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-blue);
+            box-shadow:
+                inset 0 2px 8px var(--shadow-light),
+                0 0 20px var(--glow-blue);
         }
 
         .task-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
         }
 
         .analyze-btn {
-            background: linear-gradient(135deg, #004390, #E94800);
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
             border: none;
-            color: #fff;
+            color: var(--white);
             padding: 1rem 2rem;
-            border-radius: 15px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            box-shadow:
+                0 8px 25px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analyze-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .analyze-btn:hover::before {
+            left: 100%;
         }
 
         .analyze-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(233, 72, 0, 0.3);
+            background: linear-gradient(135deg, var(--light-orange), var(--primary-orange));
+            transform: translateY(-2px) scale(1.02);
+            box-shadow:
+                0 12px 35px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         /* 结果展示区域 */
@@ -320,47 +527,61 @@
             margin-top: 2rem;
         }
 
-        .process-flow-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+        .process-flow-panel, .stats-panel {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             padding: 1.5rem;
+            box-shadow:
+                0 12px 40px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-flow-panel::before,
+        .stats-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-orange), var(--primary-blue));
         }
 
         .process-step {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(233, 72, 0, 0.3);
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-orange);
             border-radius: 12px;
             padding: 1rem;
             margin-bottom: 1rem;
-            position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 4px 15px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .process-step:hover {
-            background: rgba(233, 72, 0, 0.1);
-            border-color: rgba(233, 72, 0, 0.5);
-            transform: translateX(5px);
-        }
-
-        .process-step::before {
-            content: '';
-            position: absolute;
-            left: -1px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, #004390, #E94800);
-            border-radius: 2px;
+            background: linear-gradient(135deg, var(--primary-blue), rgba(61, 123, 198, 0.9));
+            border-color: var(--primary-blue);
+            color: var(--white);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .step-number {
-            background: linear-gradient(135deg, #004390, #E94800);
-            color: #fff;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            color: var(--white);
             width: 30px;
             height: 30px;
-            border-radius: 50%;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -368,26 +589,26 @@
             float: left;
             margin-right: 1rem;
             margin-top: 0.2rem;
+            box-shadow:
+                0 4px 12px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .step-content h4 {
-            color: #E94800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
         }
 
         .step-description {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             line-height: 1.5;
         }
 
         /* 统计面板 */
-        .stats-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -396,32 +617,53 @@
         }
 
         .stat-item {
-            background: rgba(233, 72, 0, 0.1);
-            border: 1px solid rgba(233, 72, 0, 0.3);
-            border-radius: 10px;
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 1rem;
             text-align: center;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 4px 15px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 8px 25px var(--shadow-medium),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: #E94800;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--glow-orange);
         }
 
         .stat-label {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         /* 知识库样式 */
         .knowledge-base-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 2rem;
+            box-shadow:
+                0 20px 60px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
         }
 
         .knowledge-main-grid {
@@ -432,17 +674,20 @@
         }
 
         .knowledge-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             padding: 1.5rem;
+            box-shadow:
+                0 12px 40px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .kb-tabs {
             display: flex;
-            gap: 10px;
+            gap: 4px;
             margin-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .kb-tab {
@@ -451,13 +696,22 @@
             border-radius: 10px 10px 0 0;
             transition: all 0.3s ease;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            box-shadow:
+                0 2px 8px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .kb-tab.active {
-            background: linear-gradient(135deg, #004390, #E94800);
-            color: #fff;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            border-color: var(--primary-blue);
+            box-shadow:
+                0 4px 15px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .kb-tab-content {
@@ -466,18 +720,12 @@
 
         .kb-tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .kb-btn {
-            background: linear-gradient(135deg, #004390, #E94800);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
             border: none;
-            color: #fff;
+            color: var(--white);
             padding: 0.8rem 1.5rem;
             border-radius: 10px;
             font-weight: 600;
@@ -488,17 +736,24 @@
             gap: 0.5rem;
             width: 100%;
             justify-content: center;
+            box-shadow:
+                0 6px 20px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .kb-btn:hover {
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(233, 72, 0, 0.3);
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .kb-btn-danger {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
             border: none;
-            color: white;
+            color: var(--white);
             padding: 0.5rem 1rem;
             border-radius: 8px;
             font-weight: 600;
@@ -507,11 +762,17 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            box-shadow:
+                0 4px 15px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .kb-btn-danger:hover {
+            background: linear-gradient(135deg, var(--light-orange), var(--primary-orange));
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            box-shadow:
+                0 6px 20px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .form-group {
@@ -522,7 +783,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
         }
 
         .form-group input,
@@ -530,25 +791,29 @@
         .form-group select {
             width: 100%;
             padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            color: var(--text-primary);
             transition: all 0.3s ease;
+            box-shadow:
+                inset 0 2px 8px var(--shadow-light),
+                0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: rgba(233, 72, 0, 0.5);
-            box-shadow: 0 0 10px rgba(233, 72, 0, 0.2);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-blue);
+            box-shadow:
+                inset 0 2px 8px var(--shadow-light),
+                0 0 15px var(--glow-blue);
         }
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
         }
 
         .form-group textarea {
@@ -562,35 +827,46 @@
         }
 
         .document-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
             padding: 1rem;
             margin-bottom: 0.8rem;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             cursor: pointer;
+            box-shadow:
+                0 4px 15px var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .document-item:hover {
-            border-color: rgba(233, 72, 0, 0.5);
-            transform: translateX(5px);
-            background: rgba(233, 72, 0, 0.1);
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, var(--primary-blue), rgba(61, 123, 198, 0.9));
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .document-item.selected {
-            background: rgba(233, 72, 0, 0.2);
-            border-color: rgba(233, 72, 0, 0.8);
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            border-color: var(--primary-orange);
+            color: var(--white);
+            box-shadow:
+                0 6px 20px var(--glow-orange),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .document-title {
             font-weight: 600;
-            color: #ffffff;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
         .document-meta {
             font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
@@ -606,61 +882,65 @@
         .domain-tag {
             display: inline-block;
             padding: 4px 12px;
-            background: linear-gradient(135deg, #004390, #E94800);
-            color: #fff;
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            border-radius: 6px;
             font-size: 0.8em;
             font-weight: 600;
+            box-shadow:
+                0 2px 8px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .kb-query-result {
-            background: rgba(233, 72, 0, 0.1);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
             padding: 1.5rem;
-            border-radius: 15px;
-            border-left: 4px solid #E94800;
-            animation: slideIn 0.5s ease;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-orange);
             margin-top: 1rem;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .answer-text {
             font-size: 1.1em;
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--white);
             margin-bottom: 1rem;
         }
 
         .confidence {
             display: inline-block;
             padding: 5px 15px;
-            border-radius: 20px;
+            border-radius: 6px;
             font-size: 0.9em;
             font-weight: 600;
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .confidence.high {
-            background: rgba(233, 72, 0, 0.2);
-            color: #E94800;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            color: var(--white);
         }
 
         .confidence.medium {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            color: var(--dark-bg);
         }
 
         .confidence.low {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
+            background: linear-gradient(135deg, var(--primary-gray), var(--light-gray));
+            color: var(--white);
         }
 
         .citations {
             margin-left: 10px;
             font-size: 0.9em;
-            color: #E94800;
+            color: var(--white);
         }
 
         .loading {
@@ -677,10 +957,11 @@
             display: inline-block;
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #E94800;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-orange);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            box-shadow: 0 0 15px var(--glow-orange);
         }
 
         @keyframes spin {
@@ -691,25 +972,127 @@
         .mini-spinner {
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(233, 72, 0, 0.3);
-            border-top: 2px solid #E94800;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--primary-orange);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-right: 0.5rem;
+            box-shadow: 0 0 8px var(--glow-orange);
         }
 
         .panel-loading {
             display: flex;
             align-items: center;
-            color: #E94800;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 0.9rem;
         }
 
         .placeholder-message {
             text-align: center;
             padding: 2rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
             font-style: italic;
+        }
+
+        /* 下载按钮样式 */
+        .download-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .download-btn.json {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+        }
+
+        .download-btn.json:hover {
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
+            box-shadow:
+                0 8px 25px var(--glow-blue),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .download-btn.excel {
+            background: linear-gradient(135deg, #28a745, #34ce57);
+        }
+
+        .download-btn.excel:hover {
+            background: linear-gradient(135deg, #34ce57, #28a745);
+            box-shadow:
+                0 8px 25px rgba(40, 167, 69, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* 通知样式 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            z-index: 1001;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease;
+            box-shadow:
+                0 12px 40px var(--shadow-medium),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.success {
+            border-left: 4px solid #00ff7f;
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 20px rgba(0, 255, 127, 0.3);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--primary-orange);
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 20px var(--glow-orange);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* 响应式设计 */
@@ -733,79 +1116,238 @@
             .main-nav {
                 display: none;
             }
+
+            .platform-header {
+                padding: 1rem;
+            }
         }
 
-        /* 通知样式 */
-        .notification {
+        /* 优化部分样式 */
+        h3 {
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 0 1rem 0;
+            font-weight: 600;
+        }
+
+        h4 {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+        }
+
+        /* AI助手按钮 */
+        .ai-assistant-fab {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(15, 15, 35, 0.98);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 1rem 1.5rem;
-            color: white;
-            z-index: 1001;
-            max-width: 400px;
-            animation: slideInRight 0.3s ease;
-        }
-
-        .notification.success {
-            border-left: 4px solid #00ff7f;
-        }
-
-        .notification.error {
-            border-left: 4px solid #ff6b6b;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* 下载按钮样式 */
-        .download-btn {
-            transition: all 0.3s ease;
-            position: relative;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow:
+                0 12px 40px var(--glow-orange),
+                0 0 0 0 rgba(233, 72, 0, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: aiPulse 3s infinite;
+            backdrop-filter: blur(10px);
             overflow: hidden;
         }
 
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .download-btn:active {
-            transform: translateY(0);
-        }
-
-        .download-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .download-btn::after {
+        .ai-assistant-fab::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent,
+                rgba(0, 67, 142, 0.1),
+                transparent
+            );
+            animation: rotate 4s linear infinite;
+            z-index: -1;
         }
 
-        .download-btn:active::after {
-            width: 300px;
-            height: 300px;
+        .ai-assistant-fab::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes aiPulse {
+            0%, 100% {
+                box-shadow:
+                    0 12px 40px var(--glow-orange),
+                    0 0 0 0 rgba(233, 72, 0, 0.4),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.2),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow:
+                    0 16px 50px var(--glow-orange),
+                    0 0 0 8px rgba(233, 72, 0, 0.1),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .ai-assistant-fab:hover {
+            background: linear-gradient(135deg, var(--light-orange), var(--primary-orange));
+            transform: translateY(-5px) scale(1.15);
+            box-shadow:
+                0 20px 60px var(--glow-orange),
+                0 0 0 12px rgba(233, 72, 0, 0.15),
+                inset 0 3px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+            animation: none;
+        }
+
+        .ai-assistant-fab:active {
+            transform: translateY(-3px) scale(1.1);
+            transition: all 0.1s ease;
+        }
+
+        /* AI助手面板容器 */
+        .ai-assistant-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .ai-assistant-panel.active {
+            display: flex;
+        }
+
+        .ai-assistant-content {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow:
+                0 25px 80px var(--shadow-heavy),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        .ai-assistant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .ai-assistant-title {
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .ai-assistant-close {
+            background: linear-gradient(135deg, var(--primary-gray), var(--light-gray));
+            border: none;
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .ai-assistant-close:hover {
+            background: linear-gradient(135deg, var(--light-gray), var(--primary-gray));
+            transform: translateY(-2px) scale(1.05);
+            box-shadow:
+                0 6px 20px rgba(89, 89, 89, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 额外的科技感效果 */
+        .tech-glow {
+            position: relative;
+        }
+
+        .tech-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 67, 142, 0.1), transparent);
+            pointer-events: none;
+            animation: techScan 3s infinite;
+        }
+
+        @keyframes techScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
     </style>
 </head>
 <body>
-    <!-- 动态背景 -->
+    <!-- 科技感背景动画 -->
     <div class="background-animation">
         <div class="floating-shapes">
             <div class="shape"></div>
@@ -882,7 +1424,7 @@
         <!-- 内容区域 -->
         <section class="content-area" id="mainContent">
             <!-- 默认显示任务分解模块 -->
-            <div class="task-decomposition-panel">
+            <div class="task-decomposition-panel tech-glow">
                 <div class="panel-header">
                     <h2 class="panel-title">智能任务分解系统</h2>
                     <div class="ai-status">
@@ -903,15 +1445,15 @@
                     <!-- 工艺流程 -->
                     <div class="process-flow-panel">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3 style="color: #E94800; margin: 0;">🔧 工艺流程</h3>
+                            <h3>🔧 工艺流程</h3>
                             <div class="panel-loading" id="processLoading" style="display: none;">
                                 <div class="mini-spinner"></div>
-                                <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #E94800;">分析中...</span>
+                                <span style="margin-left: 0.5rem; font-size: 0.8rem;">分析中...</span>
                             </div>
                         </div>
                         <div id="processSteps">
                             <div class="placeholder-message">
-                                <span style="color: rgba(255, 255, 255, 0.6);">请输入任务并点击"开始分析"</span>
+                                <span>请输入任务并点击"开始分析"</span>
                             </div>
                         </div>
                     </div>
@@ -919,10 +1461,10 @@
                     <!-- 统计信息 -->
                     <div class="stats-panel">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3 style="color: #E94800; margin: 0;">📊 分析统计</h3>
+                            <h3>📊 分析统计</h3>
                             <div class="panel-loading" id="statsLoading" style="display: none;">
                                 <div class="mini-spinner"></div>
-                                <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #E94800;">计算中...</span>
+                                <span style="margin-left: 0.5rem; font-size: 0.8rem;">计算中...</span>
                             </div>
                         </div>
                         <div class="stats-grid">
@@ -946,14 +1488,14 @@
 
                         <div style="margin-top: 2rem;" id="optimizationSection">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <h4 style="color: #E94800; margin: 0;">🎯 优化建议</h4>
+                                <h4>🎯 优化建议</h4>
                                 <div class="panel-loading" id="optimizationLoading" style="display: none;">
                                     <div class="mini-spinner"></div>
-                                    <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #E94800;">生成中...</span>
+                                    <span style="margin-left: 0.5rem; font-size: 0.8rem;">生成中...</span>
                                 </div>
                             </div>
-                            <div id="optimizationContent" style="background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.3); border-radius: 8px; padding: 1rem;">
-                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0; font-style: italic;">
+                            <div id="optimizationContent" style="background: linear-gradient(135deg, var(--primary-blue), var(--light-blue)); color: var(--white); border-radius: 12px; padding: 1rem; box-shadow: 0 6px 20px var(--glow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
+                                <p style="line-height: 1.5; margin: 0; font-style: italic; color: var(--white);">
                                     等待分析完成后生成优化建议...
                                 </p>
                             </div>
@@ -961,13 +1503,13 @@
 
                         <!-- 下载按钮区域 -->
                         <div style="margin-top: 2rem; display: none;" id="downloadSection">
-                            <h4 style="color: #E94800; margin-bottom: 1rem;">📥 结果导出</h4>
-                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                                <button class="download-btn" onclick="downloadJSON()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                            <h4>📥 结果导出</h4>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                                <button class="download-btn json" onclick="downloadJSON()">
                                     <span>📄</span>
                                     下载JSON
                                 </button>
-                                <button class="download-btn" onclick="downloadExcel()" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                <button class="download-btn excel" onclick="downloadExcel()">
                                     <span>📊</span>
                                     下载Excel
                                 </button>
@@ -1026,7 +1568,7 @@
             const contentArea = document.getElementById('mainContent');
             contentArea.innerHTML = `
                 <!-- 任务分解模块 -->
-                <div class="task-decomposition-panel">
+                <div class="task-decomposition-panel tech-glow">
                     <div class="panel-header">
                         <h2 class="panel-title">智能任务分解系统</h2>
                         <div class="ai-status">
@@ -1047,15 +1589,15 @@
                         <!-- 工艺流程 -->
                         <div class="process-flow-panel">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <h3 style="color: #00f5ff; margin: 0;">🔧 工艺流程</h3>
+                                <h3>🔧 工艺流程</h3>
                                 <div class="panel-loading" id="processLoading" style="display: none;">
                                     <div class="mini-spinner"></div>
-                                    <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">分析中...</span>
+                                    <span style="margin-left: 0.5rem; font-size: 0.8rem;">分析中...</span>
                                 </div>
                             </div>
                             <div id="processSteps">
                                 <div class="placeholder-message">
-                                    <span style="color: rgba(255, 255, 255, 0.6);">请输入任务并点击"开始分析"</span>
+                                    <span>请输入任务并点击"开始分析"</span>
                                 </div>
                             </div>
                         </div>
@@ -1063,10 +1605,10 @@
                         <!-- 统计信息 -->
                         <div class="stats-panel">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <h3 style="color: #00f5ff; margin: 0;">📊 分析统计</h3>
+                                <h3>📊 分析统计</h3>
                                 <div class="panel-loading" id="statsLoading" style="display: none;">
                                     <div class="mini-spinner"></div>
-                                    <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">计算中...</span>
+                                    <span style="margin-left: 0.5rem; font-size: 0.8rem;">计算中...</span>
                                 </div>
                             </div>
                             <div class="stats-grid">
@@ -1090,14 +1632,14 @@
 
                             <div style="margin-top: 2rem;" id="optimizationSection">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <h4 style="color: #00f5ff; margin: 0;">🎯 优化建议</h4>
+                                    <h4>🎯 优化建议</h4>
                                     <div class="panel-loading" id="optimizationLoading" style="display: none;">
                                         <div class="mini-spinner"></div>
-                                        <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #00f5ff;">生成中...</span>
+                                        <span style="margin-left: 0.5rem; font-size: 0.8rem;">生成中...</span>
                                     </div>
                                 </div>
-                                <div id="optimizationContent" style="background: rgba(0, 255, 127, 0.1); border: 1px solid rgba(0, 255, 127, 0.3); border-radius: 8px; padding: 1rem;">
-                                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0; font-style: italic;">
+                                <div id="optimizationContent" style="background: linear-gradient(135deg, var(--primary-blue), var(--light-blue)); color: var(--white); border-radius: 12px; padding: 1rem; box-shadow: 0 6px 20px var(--glow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
+                                    <p style="line-height: 1.5; margin: 0; font-style: italic; color: var(--white);">
                                         等待分析完成后生成优化建议...
                                     </p>
                                 </div>
@@ -1105,13 +1647,13 @@
 
                             <!-- 下载按钮区域 -->
                             <div style="margin-top: 2rem; display: none;" id="downloadSection">
-                                <h4 style="color: #00f5ff; margin-bottom: 1rem;">📥 结果导出</h4>
-                                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                                    <button class="download-btn" onclick="downloadJSON()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                <h4>📥 结果导出</h4>
+                                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                                    <button class="download-btn json" onclick="downloadJSON()">
                                         <span>📄</span>
                                         下载JSON
                                     </button>
-                                    <button class="download-btn" onclick="downloadExcel()" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                                    <button class="download-btn excel" onclick="downloadExcel()">
                                         <span>📊</span>
                                         下载Excel
                                     </button>
@@ -1128,7 +1670,7 @@
             const contentArea = document.getElementById('mainContent');
             contentArea.innerHTML = `
                 <!-- 知识库模块 -->
-                <div class="knowledge-base-panel">
+                <div class="knowledge-base-panel tech-glow">
                     <div class="panel-header">
                         <h2 class="panel-title">RAG专家知识库系统</h2>
                         <div class="ai-status">
@@ -1139,7 +1681,7 @@
 
                     <!-- 统计信息 -->
                     <div class="stats-panel" style="margin-bottom: 2rem;">
-                        <h3 style="color: #E94800; margin-bottom: 1rem;">📊 知识库统计</h3>
+                        <h3>📊 知识库统计</h3>
                         <div class="stats-grid" id="kbStatsGrid">
                             <div class="stat-item">
                                 <div class="stat-value" id="totalDocs">-</div>
@@ -1163,7 +1705,7 @@
                     <div class="knowledge-main-grid">
                         <!-- 添加文档 -->
                         <div class="knowledge-panel">
-                            <h3 style="color: #E94800; margin-bottom: 1rem;">📝 添加文档</h3>
+                            <h3>📝 添加文档</h3>
 
                             <div class="kb-tabs">
                                 <div class="kb-tab active" onclick="switchKBTab('text', event)">文本</div>
@@ -1265,7 +1807,7 @@
 
                         <!-- 智能问答 -->
                         <div class="knowledge-panel">
-                            <h3 style="color: #E94800; margin-bottom: 1rem;">❓ 智能问答</h3>
+                            <h3>❓ 智能问答</h3>
 
                             <form id="kbQueryForm" onsubmit="queryKnowledge(event)">
                                 <div class="form-group">
@@ -1294,7 +1836,7 @@
                                 <div class="form-group">
                                     <label>搜索深度</label>
                                     <input type="range" id="kbMaxDepth" min="1" max="5" value="2" oninput="updateKBDepthLabel(this.value)">
-                                    <span id="kbDepthLabel" style="color: #E94800;">深度: 2</span>
+                                    <span id="kbDepthLabel" style="color: var(--primary-orange);">深度: 2</span>
                                 </div>
 
                                 <div class="form-group">
@@ -1322,9 +1864,9 @@
                     <!-- 文档管理 -->
                     <div class="knowledge-panel" style="margin-top: 2rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3 style="color: #E94800; margin: 0;">📚 文档管理</h3>
+                            <h3 style="margin: 0;">📚 文档管理</h3>
                             <div style="display: flex; gap: 1rem; align-items: center;">
-                                <input type="text" id="kbSearchDocs" placeholder="搜索文档..." style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; background: rgba(255,255,255,0.1); color: white;" oninput="filterKBDocuments()">
+                                <input type="text" id="kbSearchDocs" placeholder="搜索文档..." style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: linear-gradient(145deg, var(--darker-bg), var(--card-bg)); color: white; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.1);" oninput="filterKBDocuments()">
                                 <button onclick="loadKBDocuments()" class="kb-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
                                     <span>🔄</span>
                                     刷新
@@ -1347,7 +1889,7 @@
         function showAnalyticsTab() {
             const contentArea = document.getElementById('mainContent');
             contentArea.innerHTML = `
-                <div class="task-decomposition-panel">
+                <div class="task-decomposition-panel tech-glow">
                     <div class="panel-header">
                         <h2 class="panel-title">数据分析中心</h2>
                         <div class="ai-status">
@@ -1355,7 +1897,7 @@
                             分析引擎运行中
                         </div>
                     </div>
-                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
                         <h3>🚧 功能开发中</h3>
                         <p>数据分析功能正在开发中，敬请期待...</p>
                     </div>
@@ -1367,7 +1909,7 @@
         function showMonitoringTab() {
             const contentArea = document.getElementById('mainContent');
             contentArea.innerHTML = `
-                <div class="task-decomposition-panel">
+                <div class="task-decomposition-panel tech-glow">
                     <div class="panel-header">
                         <h2 class="panel-title">系统监控中心</h2>
                         <div class="ai-status">
@@ -1375,7 +1917,7 @@
                             监控系统运行中
                         </div>
                     </div>
-                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
                         <h3>🚧 功能开发中</h3>
                         <p>系统监控功能正在开发中，敬请期待...</p>
                     </div>
@@ -1383,7 +1925,7 @@
             `;
         }
 
-        // 任务分析 - 整合原有API
+        // 任务分析功能
         function analyzeTask() {
             const taskInput = document.getElementById('taskInput');
             const task = taskInput.value;
@@ -1394,8 +1936,6 @@
             }
 
             currentTaskName = task;
-
-            // 显示各个面板的加载状态
             showPanelLoading();
 
             // 调用原有的任务分解API
@@ -1428,13 +1968,12 @@
             if (statsLoading) statsLoading.style.display = 'flex';
             if (optimizationLoading) optimizationLoading.style.display = 'flex';
 
-            // 清空内容显示加载状态
             const processSteps = document.getElementById('processSteps');
             if (processSteps) {
                 processSteps.innerHTML = `
                     <div class="loading-placeholder">
                         <div class="mini-spinner"></div>
-                        <p style="color: rgba(255, 255, 255, 0.7); margin-top: 1rem;">正在分析工艺流程...</p>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">正在分析工艺流程...</p>
                     </div>
                 `;
             }
@@ -1448,32 +1987,10 @@
             if (processLoading) processLoading.style.display = 'none';
             if (statsLoading) statsLoading.style.display = 'none';
 
-            // 延迟隐藏优化建议的loading，模拟AI思考过程
             setTimeout(() => {
                 const optimizationLoading = document.getElementById('optimizationLoading');
                 if (optimizationLoading) optimizationLoading.style.display = 'none';
             }, 1500);
-        }
-
-        // 重置面板内容
-        function resetPanels() {
-            const processSteps = document.getElementById('processSteps');
-            if (processSteps) {
-                processSteps.innerHTML = `
-                    <div class="placeholder-message">
-                        <span style="color: rgba(255, 255, 255, 0.6);">分析失败，请重试</span>
-                    </div>
-                `;
-            }
-
-            const elements = ['processCount', 'stepCount', 'estimatedTime', 'efficiencyScore'];
-            elements.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) element.textContent = '-';
-            });
-
-            const downloadSection = document.getElementById('downloadSection');
-            if (downloadSection) downloadSection.style.display = 'none';
         }
 
         // 显示工艺流程结果
@@ -1482,7 +1999,7 @@
             if (!processStepsContainer) return;
 
             if (!data || !data.processes) {
-                processStepsContainer.innerHTML = '<p style="color: rgba(255,255,255,0.7);">暂无工艺流程数据</p>';
+                processStepsContainer.innerHTML = '<p style="color: var(--text-secondary);">暂无工艺流程数据</p>';
                 return;
             }
 
@@ -1498,7 +2015,7 @@
                     <div class="step-content">
                         <h4>${process.name || '工序' + (index + 1)}</h4>
                         <p class="step-description">${process.description || '暂无描述'}</p>
-                        ${process.steps ? `<small style="color: #00f5ff;">包含 ${process.steps.length} 个工步</small>` : ''}
+                        ${process.steps ? `<small style="color: var(--primary-blue);">包含 ${process.steps.length} 个工步</small>` : ''}
                     </div>
                 `;
 
@@ -1521,10 +2038,8 @@
                 });
             }
 
-            // 计算效率评分（示例算法）
             const efficiency = Math.min(95, Math.max(75, 100 - processCount * 2 - totalSteps * 0.5));
 
-            // 动画更新数字
             animateNumber('processCount', processCount);
             animateNumber('stepCount', totalSteps);
             animateNumber('estimatedTime', estimatedTime);
@@ -1560,7 +2075,6 @@
             const optimizationContent = document.getElementById('optimizationContent');
             if (!optimizationContent) return;
 
-            // 模拟AI分析过程
             setTimeout(() => {
                 const suggestions = [
                     "建议在关键工序间增加质量检测环节，可提升产品合格率约8%",
@@ -1573,7 +2087,7 @@
                 const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
 
                 optimizationContent.innerHTML = `
-                    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin: 0;">
+                    <p style="line-height: 1.5; margin: 0;">
                         💡 ${randomSuggestion}
                     </p>
                 `;
@@ -1621,7 +2135,6 @@
             showNotification('JSON文件下载成功！', 'success');
         }
 
-        // 下载Excel文件
         function downloadExcel() {
             if (!currentTaskData || !currentTaskName) {
                 showNotification('没有可下载的数据', 'error');
@@ -1672,23 +2185,23 @@
 
             let stepsHtml = `
                 <div style="background: rgba(0,0,0,0.8); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
-                    <div style="background: rgba(15, 15, 35, 0.98); border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; padding: 2rem; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+                    <div style="background: linear-gradient(145deg, var(--card-bg), var(--darker-bg)); border: 1px solid var(--border-color); border-radius: 20px; padding: 2rem; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3 style="color: #E94800; margin: 0;">${process.name} - 详细工步</h3>
-                            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">×</button>
+                            <h3 style="background: linear-gradient(135deg, var(--primary-orange), var(--light-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">${process.name} - 详细工步</h3>
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: linear-gradient(135deg, var(--primary-orange), var(--light-orange)); border: none; font-size: 1.5rem; cursor: pointer; color: white; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px var(--glow-orange);">×</button>
                         </div>
                         <div>
             `;
 
             process.steps.forEach((step, index) => {
                 stepsHtml += `
-                    <div style="background: rgba(255, 255, 255, 0.05); border-left: 3px solid #E94800; padding: 1rem; margin-bottom: 0.8rem; border-radius: 0 8px 8px 0;">
+                    <div style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); border-left: 3px solid var(--primary-orange); padding: 1rem; margin-bottom: 0.8rem; border-radius: 0 12px 12px 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
                         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                            <span style="background: #E94800; color: #fff; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">${step.step_id || index + 1}</span>
-                            <span style="color: #E94800; font-size: 0.9rem;">${step.unit || ''}</span>
+                            <span style="background: linear-gradient(135deg, var(--primary-orange), var(--light-orange)); color: var(--white); width: 25px; height: 25px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; box-shadow: 0 2px 8px var(--glow-orange);">${step.step_id || index + 1}</span>
+                            <span style="background: linear-gradient(135deg, var(--primary-orange), var(--light-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 0.9rem;">${step.unit || ''}</span>
                         </div>
-                        <div style="margin-left: 35px; color: rgba(255,255,255,0.9);">
-                            <div style="color: #004390; font-weight: 500; margin-bottom: 0.3rem;">🔧 ${step.device || '设备未指定'}</div>
+                        <div style="margin-left: 35px; color: var(--light-white);">
+                            <div style="background: linear-gradient(135deg, var(--primary-blue), var(--light-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 500; margin-bottom: 0.3rem;">🔧 ${step.device || '设备未指定'}</div>
                             <div style="line-height: 1.4;">${step.action || '操作说明暂无'}</div>
                         </div>
                     </div>
@@ -1948,8 +2461,8 @@
                 html += '<div style="margin-top: 10px;">';
                 result.paragraphs.slice(0, 3).forEach((para, idx) => {
                     html += `
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; margin-top: 10px; border-radius: 10px; border-left: 3px solid #E94800;">
-                            <div style="font-size: 0.9em; color: #E94800; margin-bottom: 5px;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; margin-top: 10px; border-radius: 12px; border-left: 3px solid #E94800; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+                            <div style="font-size: 0.9em; background: linear-gradient(135deg, #E94800, #FF6B2B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 5px;">
                                 段落 ${para.display_id || para.id} - 来源: ${para.doc_title || '未知文档'}
                             </div>
                             <div style="color: rgba(255,255,255,0.9);">
@@ -2079,9 +2592,6 @@
                 taskInput.value = '';
                 taskInput.focus();
             }
-
-            // 重置所有面板
-            resetPanels();
             currentTaskData = null;
             currentTaskName = '';
         }
@@ -2114,8 +2624,7 @@
 
         function refreshKnowledgeBase() {
             if (document.querySelector('.knowledge-base-panel')) {
-                loadKBDocuments();
-                loadKBStats();
+                initKnowledgeBase();
                 showNotification('知识库已刷新', 'success');
             } else {
                 showNotification('请先切换到知识库标签页', 'error');
@@ -2123,7 +2632,7 @@
         }
 
         function openAIAssistant() {
-            showNotification('AI助手功能开发中，敬请期待...', 'success');
+            toggleAIAssistant();
         }
 
         // 通知系统
@@ -2141,17 +2650,91 @@
 
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
-            // 默认显示任务分解标签页
             showDecompositionTab();
         });
     </script>
 
     <!-- AI助手触发按钮 -->
-    <button class="ai-assistant-fab" onclick="window.aiAssistant && window.aiAssistant.toggle()" title="AI助手" style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 50%; color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; z-index: 999;">
+    <button class="ai-assistant-fab" onclick="toggleAIAssistant()" title="AI智能助手 - 点击获取帮助">
         🤖
     </button>
 
-    <!-- 引入AI助手模块 -->
-    <script src="/static/js/modules/ai-assistant.js"></script>
+    <!-- AI助手面板 -->
+    <div class="ai-assistant-panel" id="aiAssistantPanel">
+        <div class="ai-assistant-content">
+            <div class="ai-assistant-header">
+                <h3 class="ai-assistant-title">🤖 AI智能助手</h3>
+                <button class="ai-assistant-close" onclick="toggleAIAssistant()">×</button>
+            </div>
+            <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                <div style="font-size: 3rem; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--glow-orange));">🚀</div>
+                <h4 style="background: linear-gradient(135deg, var(--primary-blue), var(--light-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">智能助手功能开发中</h4>
+                <p style="line-height: 1.6; margin-bottom: 1.5rem; color: var(--text-primary);">
+                    我们正在为您开发更强大的AI助手功能，包括：
+                </p>
+                <div style="text-align: left; background: linear-gradient(145deg, #f8f9fa, #e9ecef); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); color: var(--text-primary);">
+                    <div style="margin-bottom: 0.8rem;">💡 智能工艺优化建议</div>
+                    <div style="margin-bottom: 0.8rem;">🔍 实时问题解答</div>
+                    <div style="margin-bottom: 0.8rem;">📊 数据分析洞察</div>
+                    <div style="margin-bottom: 0.8rem;">⚡ 任务自动分解</div>
+                    <div>🎯 个性化推荐</div>
+                </div>
+                <button
+                    onclick="showNotification('感谢您的反馈！我们会尽快完善AI助手功能', 'success')"
+                    style="
+                        background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+                        border: none;
+                        color: var(--white);
+                        padding: 0.8rem 2rem;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 6px 20px var(--glow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                    "
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px var(--glow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.3)'"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px var(--glow-blue), inset 0 1px 0 rgba(255, 255, 255, 0.2)'"
+                >
+                    💬 提供反馈建议
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入AI助手模块 (预留) -->
+    <script>
+        // AI助手切换功能
+        function toggleAIAssistant() {
+            const panel = document.getElementById('aiAssistantPanel');
+            if (panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            } else {
+                panel.classList.add('active');
+            }
+        }
+
+        // 点击面板外部关闭
+        document.addEventListener('click', function(event) {
+            const panel = document.getElementById('aiAssistantPanel');
+            const fab = document.querySelector('.ai-assistant-fab');
+
+            if (panel.classList.contains('active') &&
+                !panel.querySelector('.ai-assistant-content').contains(event.target) &&
+                !fab.contains(event.target)) {
+                panel.classList.remove('active');
+            }
+        });
+
+        // ESC键关闭面板
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const panel = document.getElementById('aiAssistantPanel');
+                if (panel.classList.contains('active')) {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
