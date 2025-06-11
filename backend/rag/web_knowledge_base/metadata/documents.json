@@ -40,5 +40,19 @@
     "page_count": 1,
     "word_count": 566,
     "token_count": 1707
+  },
+  "ad86aab19ed8e0b1": {
+    "doc_id": "ad86aab19ed8e0b1",
+    "title": "珞石产品手册",
+    "source_type": "file",
+    "source_path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\tmpgi28rg6h.pdf",
+    "domain": "机器人",
+    "version": "1.0",
+    "created_at": "2025-06-11T16:06:11.590272",
+    "updated_at": "2025-06-11T16:06:11.590272",
+    "hash": "8a8da7d1bf0b2205b0ecb6ed6b698987",
+    "page_count": 71,
+    "word_count": 5048,
+    "token_count": 24383
   }
 }
